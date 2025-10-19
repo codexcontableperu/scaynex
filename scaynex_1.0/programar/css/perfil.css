@@ -1,0 +1,121 @@
+*{
+	margin: 0;
+	padding:0;
+}
+
+body{
+background: #EDF0F5;
+
+}
+
+.log{
+	display: flex;
+	display: block;
+	background: #FEFEFE;
+	border-radius: 0.5em;
+	border: 0px solid red;
+	margin-bottom: 2px;
+	text-align: left;
+	
+}
+
+p{
+text-align: left;
+	border: 0px solid red;
+	padding: 0;	
+	margin	:0;
+}
+
+.log img{
+padding-top: 0px;
+border: 0px solid red;
+float:left;
+}
+
+.estrella{
+	text-align: right;
+	margin: 0;
+	padding:0;
+}
+.cc{
+	background: #FEFEFE;
+	border-radius: 0.5em;
+	border: 1px solid #E0E2E3;
+	margin-bottom: 2px;
+	padding-bottom: 10px;
+	float:left;
+
+}
+
+.descrip{
+	padding-top: 10px;
+	background: #FEFEFE;
+	border-radius: 0.5em;
+	border: 1px solid #E0E2E3;
+	margin-bottom: 2px;
+	padding-bottom: 10px;
+	float:left;
+
+}
+
+.cont{
+	padding-top: 10px;
+	background: #FEFEFE;
+	border-radius: 0.5em;
+	border: 1px solid #E0E2E3;
+	margin-bottom: 2px;
+	padding-bottom: 10px;
+	float:left;
+
+}
+
+.li{
+	padding-top: 10px;
+	background: #FEFEFE;
+	border-radius: 0.5em;
+	border: 1px solid #E0E2E3;
+	margin-bottom: 2px;
+	height:70px;
+	
+
+}
+
+.link{
+	
+	display: inline-block;
+}
+
+.center {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+align-content: center;
+margin-bottom: 5px;
+color: #44464A;
+
+}
+
+
+h3{
+	font: 130% sans-serif;
+}
+
+h5{
+	font: 130% sans-serif;
+}
+
+
+.row{
+display: flex;
+   align-items: center;
+
+}
+.hed{
+	margin-top: 3px;
+}
+
+.datos{
+
+text-align: left;	
+
+}

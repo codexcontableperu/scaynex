@@ -1,0 +1,16 @@
+[02-Jul-2024 15:45:12 America/Lima] PHP Notice:  Undefined index: h_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 15
+[02-Jul-2024 15:45:12 America/Lima] PHP Notice:  Undefined index: t_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 16
+[02-Jul-2024 15:45:12 America/Lima] PHP Notice:  Undefined index: h_salida in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 17
+[02-Jul-2024 15:45:12 America/Lima] PHP Notice:  Undefined index: obs_descarga in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 18
+[02-Jul-2024 15:45:13 America/Lima] PHP Notice:  Undefined index: h_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 15
+[02-Jul-2024 15:45:13 America/Lima] PHP Notice:  Undefined index: t_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 16
+[02-Jul-2024 15:45:13 America/Lima] PHP Notice:  Undefined index: h_salida in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 17
+[02-Jul-2024 15:45:13 America/Lima] PHP Notice:  Undefined index: obs_descarga in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 18
+[03-Jul-2024 19:36:19 America/Lima] PHP Notice:  Undefined index: h_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 15
+[03-Jul-2024 19:36:19 America/Lima] PHP Notice:  Undefined index: t_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 16
+[03-Jul-2024 19:36:19 America/Lima] PHP Notice:  Undefined index: h_salida in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 17
+[03-Jul-2024 19:36:19 America/Lima] PHP Notice:  Undefined index: obs_descarga in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 18
+[03-Jul-2024 19:44:39 America/Lima] PHP Notice:  Undefined index: h_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 15
+[03-Jul-2024 19:44:39 America/Lima] PHP Notice:  Undefined index: t_entrega in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 16
+[03-Jul-2024 19:44:39 America/Lima] PHP Notice:  Undefined index: h_salida in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 17
+[03-Jul-2024 19:44:39 America/Lima] PHP Notice:  Undefined index: obs_descarga in /home/scaynexc/public_html/rd/crud_descargas/create.php on line 18

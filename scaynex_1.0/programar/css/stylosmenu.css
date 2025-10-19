@@ -1,0 +1,30 @@
+.col{
+	background: #EAEAEA;  /* fallback for old browsers */
+	padding-bottom: 20px;
+
+	border: 1px solid #D2D3D5;
+	border-radius: 1em;
+}
+
+  .userup{
+    color: #FEFEFE;
+      height: 35px;
+ 
+
+    padding: 0px;
+    padding-left: 6px;
+    padding-right: 10px;
+    
+    border-radius: 0.5em;
+    vertical-align: bottom;
+    display: flex;
+    text-transform: 
+  }
+
+  h6{
+    margin-top: 8px;
+
+  }
+
+
+

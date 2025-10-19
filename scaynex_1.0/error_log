@@ -1,0 +1,29 @@
+[07-Dec-2023 22:56:24 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:24 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:37 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:37 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:38 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:38 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:40 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:56:40 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:32 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:32 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:33 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:33 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:34 UTC] PHP Warning:  include(/home/scaynexc/public_html/sitepro/index.php): failed to open stream: No such file or directory in /home/scaynexc/public_html/index.php on line 4
+[07-Dec-2023 22:59:34 UTC] PHP Warning:  include(): Failed opening '/home/scaynexc/public_html/sitepro/index.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/scaynexc/public_html/index.php on line 4
+[21-Feb-2024 02:52:22 UTC] PHP Notice:  Undefined variable: conexion in /home/scaynexc/public_html/includes/session1.php on line 10
+[21-Feb-2024 02:52:22 UTC] PHP Warning:  mysqli_close() expects parameter 1 to be mysqli, null given in /home/scaynexc/public_html/includes/session1.php on line 10
+[21-Feb-2024 02:52:22 UTC] PHP Notice:  Undefined variable: userup in /home/scaynexc/public_html/index-menu.php on line 154
+[21-Feb-2024 14:33:04 UTC] PHP Notice:  Undefined variable: conexion in /home/scaynexc/public_html/includes/session1.php on line 10
+[21-Feb-2024 14:33:04 UTC] PHP Warning:  mysqli_close() expects parameter 1 to be mysqli, null given in /home/scaynexc/public_html/includes/session1.php on line 10
+[21-Feb-2024 14:33:04 UTC] PHP Notice:  Undefined variable: userup in /home/scaynexc/public_html/index-menu.php on line 154
+[22-Feb-2024 17:19:39 UTC] PHP Notice:  Undefined variable: conexion in /home/scaynexc/public_html/includes/session1.php on line 10
+[22-Feb-2024 17:19:39 UTC] PHP Warning:  mysqli_close() expects parameter 1 to be mysqli, null given in /home/scaynexc/public_html/includes/session1.php on line 10
+[22-Feb-2024 17:19:39 UTC] PHP Notice:  Undefined variable: userup in /home/scaynexc/public_html/index-menu.php on line 154
+[27-Feb-2024 14:54:20 UTC] PHP Notice:  Undefined variable: conexion in /home/scaynexc/public_html/includes/session1.php on line 10
+[27-Feb-2024 14:54:20 UTC] PHP Warning:  mysqli_close() expects parameter 1 to be mysqli, null given in /home/scaynexc/public_html/includes/session1.php on line 10
+[27-Feb-2024 14:54:20 UTC] PHP Notice:  Undefined variable: userup in /home/scaynexc/public_html/index-menu.php on line 154
+[11-Mar-2024 18:42:16 UTC] PHP Notice:  Undefined variable: conexion in /home/scaynexc/public_html/includes/session1.php on line 10
+[11-Mar-2024 18:42:16 UTC] PHP Warning:  mysqli_close() expects parameter 1 to be mysqli, null given in /home/scaynexc/public_html/includes/session1.php on line 10
+[11-Mar-2024 18:42:16 UTC] PHP Notice:  Undefined variable: userup in /home/scaynexc/public_html/index-menu.php on line 154

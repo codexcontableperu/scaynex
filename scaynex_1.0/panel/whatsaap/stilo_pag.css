@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Fondo gris clásico */
+}
+
+.pagina-centrada {
+    background-color: #fff; /* Fondo blanco */
+    margin: 30px auto; /* Margen superior e inferior, centrado horizontalmente */
+    padding: 20px;
+    border-radius: 7px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra en los bordes */
+    max-width: 600px; /* Ancho máximo del contenido */
+}

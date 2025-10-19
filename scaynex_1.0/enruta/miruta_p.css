@@ -1,0 +1,26 @@
+.header {
+ background-color: red;
+padding: 3px;
+}
+
+.body {
+   
+    
+    padding: 10px;
+    padding-left: 15px;
+    font-size: 6px;
+}
+
+
+.tarjeta {
+ width: 160px;
+margin-bottom: 15px;
+font-size: 12px;
+
+}
+
+.tiket {
+
+font-size: 12px;
+background: red;
+}

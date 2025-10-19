@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+#header {
+    background-color: #008169 ; /* Verde clásico de WhatsApp */
+    color: #fff;
+    padding: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#whatsapp-text {
+    font-size: 1.2em;
+}
+
+#header-icons {
+    display: flex;
+    align-items: center;
+}
+
+#camera-icon,
+#search-icon,
+#menu-icon {
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+}
+
+#second-header {
+    background-color: #008169; /* Verde clásico de WhatsApp */
+    color: #fff;
+    padding: 0px;
+    display: flex;
+
+
+}
+
+#user-icon,
+#chat-icon,
+#news-icon,
+#calls-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+#second-bar {
+    border-top: 3px solid #008169; /* Color verde más claro */
+}
+
+
+.selec {
+
+padding-bottom: 10px;
+border: 2px solid #ddd; /* Borde de color gris */
+border-top: none; /* Elimina el borde inferior */
+border-left:none ;
+border-right:none ;
+text-decoration: none; /* Quita el subrayado */
+color: white;
+}
+
+.noselec {
+text-decoration: none; /* Quita el subrayado */
+padding-bottom: 10px;
+color: white;
+}

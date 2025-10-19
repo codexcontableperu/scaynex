@@ -1,0 +1,257 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing:border-box;
+	font-family: 'Roboto Slab', serif;
+}
+
+body {
+	background: #F2F2F2;
+}
+
+a {
+	text-decoration: none;
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	padding-bottom: 10px;
+}
+
+/* ----- ----- HEADER ----- ----- */
+header {
+	width: 100%;
+	text-align: center;
+	padding: 60px 0;
+}
+
+header h1 {
+	font-weight: normal;
+	font-size: 40px;
+	line-height: 40px;
+	margin-bottom: 10px;
+}
+
+header h2 {
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 24px;
+	color: #919191;
+}
+
+/* ----- ----- MAIN ----- ----- */
+main {
+	width: 100%;
+}
+
+main nav {
+	width: 100%;
+	display: flex;
+	margin-bottom: 60px;
+}
+
+main nav .btn-menu {
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	border: 1px solid #000;
+	
+	cursor: pointer;
+	font-size: 28px;
+	margin-right: 20px;
+	transition: .3s ease all;
+
+}
+
+main nav .btn-menu:hover {
+	background: #0088B5;
+	border:1px solid #828282;
+	color: #828282;
+	
+}
+
+main nav .banner {
+	
+
+	display: inline-block;
+	width: 100%;
+	text-transform: uppercase;
+	background-size: cover;
+	text-align: center;
+	height: 65px;
+	line-height: 65px;
+	font-size: 26px;
+	font-weight: 300;
+	color: #fff;
+}
+
+main .productos {
+	/*display: flex;*/
+	justify-content: space-between;
+}
+
+main .productos figure {
+	max-width: 320px;	
+	box-shadow:0px 3px 6px rgba(0,0,0,.16);
+}
+
+main img {
+	vertical-align: top;
+	width: 100%;
+}
+
+main .productos figure figcaption a {
+	background: #000;
+	/*display: inline-block;*/
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	color: #fff;
+	height: 60px;
+	line-height: 60px;
+	padding: 0 20px;
+	font-weight: 300;
+}
+
+/* ------------------------- */
+/* Pushbars: Estilos Generales */
+/* ------------------------- */
+
+.menut{
+background: ;  /* fallback for old browsers */
+
+
+padding:10px;
+color:#ffff;
+
+
+}
+
+.menut .btn-cerrar{
+text-align: right;
+
+}
+
+.menut .btn-cerrar button{
+border: none;
+font-size: 20px;
+
+}
+
+
+
+/* ----- ----- Pushbar: Menu de Navegacion ----- ----- */
+.tarjeta a{
+
+display: block;
+color: #aaaaaa;
+padding: 20px 0;
+border-bottom: 1px solid rgba(112,112,112, .80);
+font-weight: 300;
+transition: .3s ease color;
+
+
+}
+
+.logo img{
+
+
+object-fit: contain;
+ 
+height: 70%;
+width: 70%;
+
+
+}
+
+
+
+.logo {
+
+	border: 0px solid red;
+	padding: 10px;
+	border-radius: 1em;
+	margin-top: 40px;
+	margin-bottom: 50px;
+	
+
+}
+.empresa{
+	font-weight: bold;
+	color: #00a8ff;
+	border-bottom: 1px solid red;
+	border: 0px solid red;
+	border-radius: 0.3em;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.perfil{
+
+	
+	color: #8395a7;
+	border-radius: 0.3em;
+	border: 0px solid red;
+	padding: 10px;
+	margin-bottom: 60px;
+}
+.link {
+	border: 0px solid #353b48;
+	padding: 10px;
+display: inline-block;
+}
+.li{
+	box-shadow: 0 8px 10px -4px rgba(0,0,0,.6);
+border: 0px solid red;
+text-align: center;
+display: inline-block;
+}
+
+.numero {
+     background:#222222;
+     display: block;
+    
+     box-shadow: 0 8px 10px -4px rgba(0,0,0,.6);   
+     border: 0px solid red;
+     border-top-right-radius: 0.5em;
+     border-bottom-right-radius: 0.5em;
+     width: 125px;
+     color: #ffffff;
+
+}
+
+/* ----- ----- Pushbar: Carrito de Compras ----- ----- */
+
+/* ----- ----- Pushbar: Productos ----- ----- */
+
+/* ----- ----- Pushbar: Formulario Newsletter  ----- ----- */
+
+/* ------------------------- */
+/* MEDIA QUERIES */
+/* ------------------------- */
+@media screen and (max-width: 600px) {
+	header h1 {
+		font-size: 30px;
+		line-height: 30px;
+	}
+
+	header h2 {
+		font-size: 16px;
+		line-height: 16px;
+	}
+
+	main nav .banner {
+		font-size: 14px;
+	}
+
+	main .productos {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	main .productos figure {
+		margin-bottom: 40px;
+	}
+}

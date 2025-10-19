@@ -1,0 +1,93 @@
+/* ------------------------- */
+/* Estilos Generales */
+/* ------------------------- */
+body {
+     
+background: #232526;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.boxi{
+
+     background:#222222;
+     display: inline-block;
+     box-shadow: 0 8px 10px -4px rgba(0,0,0,.6);   
+     border: 0px solid red;
+     border-top-left-radius: 0.5em;
+     border-bottom-left-radius: 0.5em;
+     width: 125px;
+     color: #ffffff;
+     margin-bottom: 20px;
+
+
+}
+
+.boxd{
+
+     background:#222222;
+     display: inline-block;
+     box-shadow: 0 8px 10px -4px rgba(0,0,0,.6);   
+     border: 0px solid red;
+     border-top-right-radius: 0.5em;
+     border-bottom-right-radius: 0.5em;
+     width: 125px;
+     color: #ffffff;
+
+
+}
+
+
+.detalle {
+     width: 10px;
+     height: 10px;
+
+}
+
+.titulo {
+     font-size: 55px;
+     text-transform: uppercase;
+     letter-spacing: 7px;
+}
+
+.galeria {
+justify-content: space-around;
+
+}
+
+
+.galeria img {
+ background: #ffffff; /* fallback for old browsers */  
+background: -webkit-linear-gradient(to right, #ffffff, #ecf0f1, #f4f4f4, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #ffffff, #f4f4f4, #F2F2F2, #ffffff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+object-fit: cover;
+filter: brightness(90%);
+cursor: pointer;
+
+     box-shadow: 0 8px 10px -4px rgba(0,0,0,.6);
+     border-radius: 10px;
+     width: 300px;
+     height: 200px;
+     margin: 15px;
+
+
+}
+
+.galeria img:hover {
+filter: brightness(110%);
+animation: escalar 1.5s infinite alternate;
+}
+
+@keyframes escalar{
+     to{
+     transform : scale(1);
+     }
+     from{
+     transform: scale(1.05);
+     }
+}
+
+
+
+

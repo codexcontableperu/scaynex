@@ -1,0 +1,108 @@
+  body {
+
+background: #F2F2F2;  
+
+  }
+
+
+  .infigrafia{
+
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+
+
+.menu a:hover {
+filter: brightness(80%);
+
+}
+.mm{
+  font: 130% sans-serif;
+}
+
+
+
+    <style class="u-style">.u-section-2 {
+  background-image: url("./../img/pista4.jpg");
+  background-position: 50% 50%;
+}
+.u-section-2 .u-sheet-1 {
+  min-height: 730px;
+}
+.u-section-2 .u-text-1 {
+  font-size: 4.5rem;
+  line-height: 1.2;
+  font-family: Alata;
+  margin: 60px auto 0;
+}
+.u-section-2 .u-form-1 {
+  height: 56px;
+  width: 530px;
+  margin: 38px auto 0;
+}
+.u-section-2 .u-input-1 {
+  font-size: 1.25rem;
+}
+.u-section-2 .u-btn-1 {
+  text-transform: uppercase;
+  background-image: none;
+  border-style: solid;
+  width: 100%;
+  letter-spacing: 3px;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+.u-section-2 .u-text-2 {
+  font-size: 0.875rem;
+  margin: 20px auto 0;
+}
+.u-section-2 .u-text-3 {
+  font-size: 0.875rem;
+  margin: 72px auto 60px;
+}
+.u-section-2 .u-btn-2 {
+  background-image: none;
+  border-style: none none solid;
+  padding: 0;
+}
+@media (max-width: 1199px) {
+  .u-section-2 .u-sheet-1 {
+    min-height: 602px;
+  }
+}
+@media (max-width: 991px) {
+  .u-section-2 .u-sheet-1 {
+    min-height: 659px;
+  }
+}
+@media (max-width: 767px) {
+  .u-section-2 .u-sheet-1 {
+    min-height: 626px;
+  }
+}
+@media (max-width: 575px) {
+  .u-section-2 .u-sheet-1 {
+    min-height: 631px;
+  }
+  .u-section-2 .u-text-1 {
+    font-size: 2.5rem;
+  }
+  .u-section-2 .u-form-1 {
+    width: 240px;
+  }
+}
+
+.fondex {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the alpha value (last parameter) for transparency */
+    border-radius: 10px; /* Adjust the border-radius for rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border color with transparency */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Box shadow with transparency */
+ 
+}
+
+
+
+
+
+</style>
