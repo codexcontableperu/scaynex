@@ -5,6 +5,10 @@
     <?php include("includes/menubar.php"); ?>
     <?php include("../data/conexion.php"); ?>
 
+
+
+    
+
     <?php
     // Fecha por defecto (hoy)
     $fecha = date('Y-m-d');
