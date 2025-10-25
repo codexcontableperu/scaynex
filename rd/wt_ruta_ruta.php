@@ -754,11 +754,13 @@ if ($filasS['tbultos'] === null) {
         <br>
           <span style="font-size: 13px;"><?php echo $filasS ['desg_distrito']?></span>
         <br>
-          <span style="font-size: 13px;">
-            <?php echo date("H:i", strtotime($filasS['hora_cita']))?>
-          </span>  
+        <span style="font-size: 13px;">
+            <?php echo $filasS['hora_cita'] ? date("H:i", strtotime($filasS['hora_cita'])) : '--:--'; ?>
+        </span> 
               
-        </a> <?php 
+        </a> 
+
+        <?php 
 }
 
 } ?>

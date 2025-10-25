@@ -25,18 +25,20 @@ $perfil = $filas ['user_perfil'];
 
 
 switch ($perfil) {
-    case 0:
-        ?> <meta http-equiv="refresh" content="0;url=./../index.php" /><?php
-        break;
-    case 1:
-        ?> <meta http-equiv="refresh" content="0;url=./../panel/index-menu.php"/><?php
-        break;
+
     case 2:
         ?><meta http-equiv="refresh" content="0;url=../rd/wt_prog_user.php?dni=' . $dni . '"/>';<?php
         break;
     case 3:
-        ?> <meta http-equiv="refresh" content="0;url=./../index11.php"/><?php
+        ?><meta http-equiv="refresh" content="0;url=../rd/wt_prog_user.php?dni=' . $dni . '"/>';<?php
         break;
+                 default:
+                    echo "<script>
+                            alert('Usuario no tiene permisos para acceder al sistema');
+                            window.location.href = '../index.php';
+                          </script>";
+                    exit();
+                    break;       
 }
 
 

@@ -97,8 +97,6 @@ img {
 
     width: 80px; /* Ajusta el tamaño de los iconos según sea necesario */
 
-    border-radius: 50%;
-
 
 
 }

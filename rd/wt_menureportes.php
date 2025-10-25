@@ -1,233 +1,197 @@
-
-
-
 <style>
+/* Estilos encapsulados solo para el menú de reportes */
+.menu-reportes-container {
+    margin-top: 30px;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+}
 
-    .container{
+.menu-reportes-container h5 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
 
-        margin-top: 6px;
+.menu-reportes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 0 15px;
+}
 
-          
-
-        margin-bottom: 10px;  
-
-
-
-    }
-
-
-
-
-
-.info {
-
+.menu-reportes-item {
+    text-decoration: none;
     display: flex;
-
+    flex-direction: column;
     align-items: center;
-
     justify-content: center;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    min-height: 140px;
+    cursor: pointer;
+}
 
+.menu-reportes-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.menu-reportes-item img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 12px;
+    object-fit: contain;
+}
+
+.menu-reportes-item p {
     margin: 0;
-
-}
-
-
-
-.step {
-
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
     text-align: center;
-
-    margin: 0 1px; /* Reducir el espacio entre los pasos */
-
-    transition: opacity 0.3s ease-in-out;
-
-
-
+    line-height: 1.3;
 }
 
-
-
-a {
-
-    text-decoration: none; /* Eliminar el subrayado, si también deseas quitarlo */
-
-    color: black;
-
+/* Modal de gastos - estilos específicos */
+.modal-gastos .form-header {
+    padding: 15px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-
-
-img:hover  {
-
-    opacity: 0.7;
-
-    border: 2px solid #008169; /* Cambiar el borde a verde al pasar el cursor */
-
+.modal-gastos .form-ingreso { 
+    background-color: #28a745; 
 }
 
-
-
-img {
-
-    width: 80px; /* Ajusta el tamaño de los iconos según sea necesario */
-
-    border-radius: 50%;
-
-
-
+.modal-gastos .form-egreso { 
+    background-color: #dc3545; 
 }
 
-
-
-.image-container:hover img {
-
-    transform: scale(1.1); /* Cambia la escala al 110% al pasar el cursor */
-
+.modal-gastos .nav-tabs {
+    border-bottom: 2px solid #dee2e6;
 }
 
-
-
-p {
-
-    font-size: 13px; /* Ajusta el tamaño de la letra según sea necesario */
-
+.modal-gastos .nav-tabs .nav-link {
+    font-weight: 500;
+    color: #495057;
 }
 
-
-
-
-
-.table td, .table th {
-
-  padding: .15rem;
-
-  vertical-align:  baseline;
-
-
-
+.modal-gastos .nav-tabs .nav-link.active {
+    color: #0d6efd;
+    border-bottom: 3px solid #0d6efd;
 }
 
+/* Tabla de saldo */
+.tabla-saldo-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
+.saldo-actual-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
 
-        table {
+.saldo-actual-display h5 {
+    color: white;
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 700;
+}
 
-            font-size: 13px; /* Cambia el tamaño de fuente para toda la tabla */
+.tabla-saldo-container table {
+    font-size: 0.9rem;
+}
 
-            width: 100%; /* Define el ancho de la tabla al 100% del contenedor */
+.tabla-saldo-container table thead {
+    background-color: #343a40;
+    color: white;
+}
 
-             height: 300%;
+.tabla-saldo-container table tbody tr:hover {
+    background-color: #f8f9fa;
+}
 
-        }
+/* Offcanvas mejorado */
+.offcanvas-gastos .offcanvas-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
 
+.offcanvas-gastos .offcanvas-header .btn-close {
+    filter: brightness(0) invert(1);
+}
 
+.offcanvas-gastos .zoomable {
+    border: 3px solid #e9ecef;
+    transition: transform 0.3s ease;
+}
 
-        /* Define el tamaño de fuente específico para las celdas de datos */
+.offcanvas-gastos .zoomable:hover {
+    transform: scale(1.02);
+}
 
-        .tdx {
-
-            font-size:10px; /* Cambia el tamaño de fuente para las celdas de datos */
-
-
-
-        }
-
-    /* Estilo personalizado para el botón */
-
-    .custom-btn {
-
-      margin: 5px auto; /* Centrar el botón */
-
-      border: 0px solid white; /* Borde gris claro */
-
-      border-radius: 5px; /* Bordes redondeados */
-
-      padding: 10px 20px; /* Espaciado interno */
-
+/* Responsive */
+@media (max-width: 576px) {
+    .menu-reportes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
-
-
-
-    .botones {
-
-      margin: 20px auto; /* Centrar el botón */
-
-      border: 1px solid white; /* Borde gris claro */
-
-      border-radius: 5px; /* Bordes redondeados */
-
-      padding: 1px 30px; /* Espaciado interno */
-
-      align-items: center; /* Alinea verticalmente */
-
+    
+    .menu-reportes-item {
+        min-height: 120px;
+        padding: 15px;
     }
-
-
-
-
-
-    .square-btn {
-
-
-
-margin: 5px;
-
-  
-
-  align-items: center; /* Alinea verticalmente */
-
+    
+    .menu-reportes-item img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .menu-reportes-item p {
+        font-size: 12px;
+    }
 }
-
-   .ancho {
-
-    width: 300px; /* Ancho al pasar el cursor */
-
-    padding: .10rem;
-
-    align-items: center; /* Alinea verticalmente */
-
-  }
-
 </style>
 
+<div class="menu-reportes-container">
+    <div class="container">
+        <h5 class="text-center">REPORTES</h5>
+        
+        <div class="menu-reportes-grid">
 
-<br>
-<h5 class="text-center">REPORTES</h5>
-
-
-<div class="botones">
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm">
-
-<div class="info">
-    <div class="step" id="step1">
-        <a href="">        
-        <img src="./whatsaap/gasto.png" alt="Paso 1">
-        <p>GASTOS</p>
-        </a>
-
-    </div>
-    <div class="step" id="step2">
-        <a href=""> 
-        <img src="./whatsaap/liquidacion.png" alt="Paso 2">
-        <p>LIQUIDACIONES</p>
-        </a>
-    </div>
-    <div class="step" id="step3">
-        <a href=""> 
-        <img src="./whatsaap/incidencias.png" alt="Paso 3">
-        <p>INCIDENCIAS</p>
-        </a>
-    </div>
-    <div class="step" id="step3">
-        <a href=""> 
-        <img src="./whatsaap/datos.png" alt="Paso 3">
-        <p>FICHA DATOS</p>
-        </a>
+            <a href="wt_control_caja.php" class="menu-reportes-item">
+                <img src="./whatsaap/liquidacion.png" alt="Liquidaciones">
+                <p>GASTOS</p>
+            </a>
+            
+            
+            <a href="#" class="menu-reportes-item">
+                <img src="./whatsaap/liquidacion.png" alt="Liquidaciones">
+                <p>LIQUIDACIONES</p>
+            </a>
+            
+            <a href="#" class="menu-reportes-item">
+                <img src="./whatsaap/incidencias.png" alt="Incidencias">
+                <p>INCIDENCIAS</p>
+            </a>
+            
+            <a href="#" class="menu-reportes-item">
+                <img src="./whatsaap/datos.png" alt="Ficha Datos">
+                <p>FICHA DATOS</p>
+            </a>
+        </div>
     </div>
 </div>
-    </div>
-  </div>
-</div>  
-</div>
+

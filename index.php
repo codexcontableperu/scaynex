@@ -14,7 +14,7 @@
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata:400">
     <style class="u-style">.u-section-2 {
-  background-image: url("img/pista4.jpg");
+  background-image: url("img/pista4.gif");
   background-position: 50% 50%;
 }
 .u-section-2 .u-sheet-1 {
@@ -142,7 +142,7 @@ border-radius: 10px; /* Adjust the border-radius for rounded corners */
 
         </div>
         <p class="u-text u-text-default u-text-2"> </p>
-        <p class="u-text u-text-default u-text-3">Web Site <a href="" target="_blank">www.scaynex.com</a>
+        <p class="u-text u-text-default u-text-3">Web Site <a href="" target="_blank">www.teletran.xyz</a>
         </p>
       </div>
 
