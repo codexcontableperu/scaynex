@@ -366,7 +366,6 @@ WHERE id_serv=$idr
     <tr>&nbsp<span class="icon-truck"></span>&nbspLLEGADA A ALMACEN</tr>
     <tr >
 
-
     <tr>
 
 

@@ -94,8 +94,8 @@
     <div class="content-area">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2>Programación de Unidades</h2>
-                <p class="text-white">Control y seguimiento de servicios programados</p>
+                <h2 class="text-dark">Programación de Unidades</h2>
+                <p >Control y seguimiento de servicios programados</p>
             </div>
             <div class="btn-group">
                 <div class="dropdown">
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Filtros de Búsqueda -->
-        <div class="card mb-4">
+        <div class="card ">
             <div class="card-body">
                 <form method="POST" id="formFiltros">
                     <div class="row g-3 align-items-end">
@@ -234,11 +234,59 @@
                     <h5 class="modal-title" id="modalSQLLabel">
                         <i class="fas fa-database"></i> Ejecutar SQL Personalizado
                     </h5>
+
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST">
                     <div class="modal-body">
                         <div class="mb-3">
+
+                    <div class="card p-3 shadow-sm">
+                  <h5 class="mb-0">
+                    <i class="fas fa-robot"></i> Asistente IA para Generar SQL
+                </h5>
+<div class="d-flex justify-content-center align-items-center gap-3 p-3">
+    
+    <div class="d-flex bg-white  rounded-pill  p-2"> 
+        
+        <a href="https://chatgpt.com/" target="_blank" class="btn btn-sm btn-light text-secondary d-flex align-items-center rounded-pill">
+            <span style="font-size: 1.2em; margin-right: 5px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/512px-OpenAI_Logo.svg.png" alt="OpenAI" style="height: 1em;">
+            </span>
+            <span class="fw-bold">GPT-4o</span>
+        </a>
+
+        <a href="https://claude.ai/" target="_blank" class="btn btn-sm btn-light text-secondary d-flex align-items-center rounded-pill">
+            <span style="font-size: 1.2em; margin-right: 5px;">
+                <span style="color: #e09e73;">✱</span> 
+            </span>
+            <span class="fw-bold">Claude 3.5</span>
+        </a>
+        
+     
+
+        <a href="https://gemini.google.com/" target="_blank" class="btn btn-sm btn-light text-secondary d-flex align-items-center rounded-pill">
+            <span style="font-size: 1.2em; margin-right: 5px; color: #726af9;">
+                ✦
+            </span>
+            <span class="fw-bold">Gemini</span>
+        </a>
+
+        
+        
+        <a href="https://chat.deepseek.com/" target="_blank" class="btn btn-sm btn-light text-secondary d-flex align-items-center rounded-pill">
+            <span style="font-size: 1.2em; margin-right: 5px; color: #2196f3;">
+                ◈
+            </span>
+            <span class="fw-bold">DeepSeek Chat</span>
+        </a>
+    </div>
+</div>
+
+</div>
+
+
+
                             <label class="form-label">Sentencia SQL</label>
                             <textarea class="form-control" name="sql_personalizado" rows="8" 
                                       placeholder="INSERT INTO rd_segimientos_head (S_FECHA, PLACA, CONDUCTOR, ...) VALUES (...);" 
@@ -323,12 +371,7 @@
         document.getElementById('modalSQL').addEventListener('show.bs.modal', function() {
             const textarea = this.querySelector('textarea[name="sql_personalizado"]');
             if (textarea.value === '') {
-                textarea.value = `INSERT INTO rd_segimientos_head (
-S_FECHA, PLACA, CONDUCTOR, AUXILIAR1, SUPERVISOR, 
-TIPO_DESPACHO, EMPRESA, H_CITA, H_CITA_R, ESTADO_IDP
-) VALUES 
-('2024-10-25', 'ABC123', 'CONDUCTOR 1', 'AYUDANTE 1', 'SUPERVISOR 1', 'EXCLUSIVO', 'EMPRESA 1', '08:00:00', '06:00:00', 0),
-('2024-10-25', 'XYZ789', 'CONDUCTOR 2', 'AYUDANTE 2', 'SUPERVISOR 2', 'RUTA', 'EMPRESA 2', '09:00:00', '07:00:00', 0);`;
+                textarea.value = ``;
             }
         });
     </script>

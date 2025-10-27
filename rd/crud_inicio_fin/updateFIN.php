@@ -7,7 +7,6 @@
 <?php 
 
 /*---NEW ARTICULOS---*/
-
 if (isset($_POST['idp'])) {
 
 $idp = $_POST['idp'];
