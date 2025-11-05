@@ -1,0 +1,118 @@
+/* Reducción general de tamaños */
+.content-area {
+    font-size: 0.875rem; /* Reducir tamaño base de fuente */
+}
+
+/* Estilos para la tabla reducida */
+#vistaTabla .table {
+    font-size: 0.8rem;
+}
+
+#vistaTabla .table th,
+#vistaTabla .table td {
+    padding: 0.4rem 0.5rem;
+}
+
+#vistaTabla .table img {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+#vistaTabla .btn-sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+}
+
+/* Estilos para las tarjetas reducidas */
+#vistaCards .card {
+    font-size: 0.8rem;
+}
+
+#vistaCards .col-md-3 {
+    flex: 0 0 auto;
+    width: 20%; /* Reducir ancho de columnas */
+}
+
+#vistaCards .card-img-top {
+    height: 120px !important; /* Reducir altura de imagen */
+}
+
+#vistaCards .card-body {
+    padding: 0.75rem;
+}
+
+#vistaCards .card-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+#vistaCards .card-footer {
+    padding: 0.5rem;
+}
+
+#vistaCards .btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+#vistaCards .btn-group .btn {
+    padding: 0.3rem 0.4rem;
+}
+
+/* Reducir tamaño de badges */
+.badge {
+    font-size: 0.7rem;
+    padding: 0.25em 0.4em;
+}
+
+/* Reducir tamaño de botones de vista */
+#btnVistaTabla, #btnVistaCards {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+}
+
+/* Ajustes para modales */
+.modal-body .form-label {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.modal-body .mb-3 {
+    margin-bottom: 0.8rem !important;
+}
+
+/* Ajustes para títulos */
+h2 {
+    font-size: 1.5rem;
+}
+
+h5.modal-title {
+    font-size: 1.2rem;
+}
+
+/* Ajustes responsivos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    #vistaCards .col-md-3 {
+        width: 50%; /* En móviles, 2 columnas */
+    }
+    
+    .content-area {
+        font-size: 0.8rem;
+    }
+    
+    #vistaCards .card-img-top {
+        height: 100px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #vistaCards .col-md-3 {
+        width: 100%; /* En móviles pequeños, 1 columna */
+    }
+}

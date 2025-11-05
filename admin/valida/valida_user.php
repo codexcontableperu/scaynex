@@ -14,10 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Validar que los campos no estén vacíos
     if (empty($dni) || empty($contrasena)) {
-        echo "<script>
-                alert('Por favor complete todos los campos');
-                window.location.href = '../index.php';
-              </script>";
+        header("Location: ../index.php?error=campos_vacios");
         exit();
     }
     
@@ -39,11 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verificar el estado del usuario
         if ($usuario['user_activo'] != 'si') {
-            echo "<script>
-                    alert('Su cuenta está inactiva. Contacte al administrador.');
-                    window.location.href = '../index.php';
-                  </script>";
             $conexion->close();
+            header("Location: ../index.php?error=cuenta_inactiva");
             exit();
         }
         
@@ -59,39 +53,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['logueado'] = true;
             
             // Redirigir a home.php según el perfil
-            switch ($usuario['user_perfil']) {
-                case 1:
-                    header("Location: ../home.php");
-                    break;
-                case 4:
-                    header("Location: ../home.php");
-                    break;
-                default:
-                    echo "<script>
-                            alert('Usuario no tiene permisos para acceder al sistema');
-                            window.location.href = '../index.php';
-                          </script>";
-                    exit();
-                    break;
+            if ($usuario['user_perfil'] == 1 || $usuario['user_perfil'] == 4) {
+                header("Location: ../home.php");
+                exit();
+            } else {
+                header("Location: ../index.php?error=sin_permisos");
+                exit();
             }
             
         } else {
             // Contraseña incorrecta
-            echo "<script>
-                    alert('La contraseña es incorrecta');
-                    window.location.href = '../index.php';
-                  </script>";
             $conexion->close();
+            header("Location: ../index.php?error=contrasena_incorrecta");
             exit();
         }
         
     } else {
         // Usuario no existe
-        echo "<script>
-                alert('El usuario no existe');
-                window.location.href = '../index.php';
-              </script>";
         $conexion->close();
+        header("Location: ../index.php?error=usuario_no_existe");
         exit();
     }
     

@@ -32,9 +32,9 @@
             <li><a href="myperfil.php"><i class="fas fa-user-circle"></i> Mi Perfil</a></li>
             <li><a href="lista_usuarios.php"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="programacion.php"><i class="fas fa-chart-bar"></i> Programacion</a></li>
-            <li><a href="mis_tareas.php"><i class="fas fa-cog"></i> Mis tareas</a></li>
+            <li><a href="home_unidades.php"><i class="fa-solid fa-truck"></i> Unidades</a></li>
             <li><a href="canvas_rutas.php"><i class="fas fa-folder"></i> Tablero Canvas</a></li>
-            <li><a href="#"><i class="fas fa-bell"></i> Notificaciones</a></li>
+            <li><a href="monitoreo.php"><i class="fas fa-bell"></i> Monitoreo</a></li>
             <li><a href="#"><i class="fas fa-key"></i> Cambiar Contraseña</a></li>
             <li><a href="#"><i class="fas fa-question-circle"></i> Ayuda</a></li>
             <li><a href="#"><i class="fas fa-info-circle"></i> Acerca de</a></li>
