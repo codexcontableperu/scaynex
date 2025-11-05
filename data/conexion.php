@@ -21,11 +21,9 @@ if ($conexion->connect_error) {
 
 <?php
 /*
-		$conexion = mysqli_connect(
-		'localhost',
-		'id14004671_sitarcin',		  
-		'Peru_2020_codex',
-		'id14004671_havrax'
-		) or die(mysqli_erro($mysqli));
+$servername = 'localhost';
+$username   = 'teletran_cristian';
+$password   = 'c.rivera.a.2020';
+$database   = 'teletran_scaynex';
 */		  
 ?>
