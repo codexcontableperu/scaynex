@@ -23,7 +23,7 @@ if (isset($_SESSION['usuario'])) {
 
     <link rel="stylesheet" href="whatsaap/stilo_what.css">
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
 
@@ -228,6 +228,10 @@ position: fixed;
 
 }
 </style>
+<!-- barra de progreso  -->
+
+<link rel="stylesheet" href="barraprogreso.css">
+
 
  <div class="whatsapp-button">
     <div id="header">
@@ -241,13 +245,26 @@ position: fixed;
         </div>
     </div>
 
-    <div id="second-header">
-        <img src="whatsaap/user-icon.png" alt="Usuario" id="user-icon">
-        <a class="boton bton " href="wt_prog_user.php?dni=<?php  echo $dni_user ; ?> ">Ordenes</a>
-        &nbsp &nbsp 
-        <a class="boton bton selec" href=""> <i class="fas fa-map-marker-alt"></i> BASE</a>
-        &nbsp &nbsp 
+<div id="second-header">
+
+    <div class="container_progreso">
+    <div class="progress-bar">
+    
+    <div class="progress-line"></div>
+    
+    <a href="wt_prog_user.php" class="step ">
+    <div class="step-circle">1</div>
+    <div class="step-label">Órdenes</div>
+    </a>
+    
+    <a href="#" class="step active ">
+    <div class="step-circle"><i class="fa-solid fa-truck truck" id="truck"></i></i></div>
+    <div class="step-label">Base</div>
+    </a>
+    
     </div>
+    </div>
+</div>
 </div>
 
 
@@ -293,7 +310,7 @@ $filaso=mysqli_fetch_assoc($resulto);
       <th >TEMPERATURA</th>
       <td class="tdx"><?php echo $filaso ['TEMPERATURA']?></td>
       <th >SERVICIO</th>
-      <td class="tdx"><?php echo $filaso ['SERVICIOS']?></td>
+      <td class="tdx"><?php echo $filaso ['CUENTA_CLIENTE']?></td>
     </tr>
       <tr>
       <th >CONDUCTOR</th>
@@ -305,7 +322,7 @@ $filaso=mysqli_fetch_assoc($resulto);
       <th >AUXILIAR 1</th>
       <td class="tdx"><?php echo $filaso ['AUXILIAR1']?></td>
       <th >HORA DE CITA</th>
-      <td class="tdx"><?php echo $filaso ['H_CITA']?></td>
+      <td class="tdx"><?php echo $filaso ['H_CITA_BASE']?></td>
     </tr>
 
     <tr>
@@ -319,7 +336,7 @@ $filaso=mysqli_fetch_assoc($resulto);
       <th >AUXILIAR 3</th>
       <td class="tdx"><?php echo $filaso ['AUXILIAR3']?> </td>
       <th >OBSERVACION</th>
-      <td class="tdx"><?php echo $filaso ['OBS_PROG']?></td>      
+      <td class="tdx"><?php echo $filaso ['OBSERVACIONES_PROG']?></td>      
     </tr>
 
   </tbody>
@@ -918,7 +935,7 @@ $filaso=mysqli_fetch_assoc($resulto);
       <th style="vertical-align: middle;" >OBSERVACION</th>
       <td >
 
-<textarea class="form-control" id="OBSERVACION_SERV" name="OBSERVACION_SERV" rows="2" placeholder="Ingresar observaciones..."><?php echo $filaso['OBS_PROG']; ?></textarea>
+<textarea class="form-control" id="OBSERVACION_SERV" name="OBSERVACION_SERV" rows="2" placeholder="Ingresar observaciones..."><?php echo $filaso['OBSERVACIONES_PROG']; ?></textarea>
       </td>
 
 </tr>
@@ -988,7 +1005,7 @@ $filaso=mysqli_fetch_assoc($resulto);
 
                 <label for="H_CITA">HCITA - BASE</label>
 
-                <input  type="time" class="form-control" id="H_CITA" name="H_CITA" value="<?php echo $filaso ['H_CITA']  ?>" disabled>
+                <input  type="time" class="form-control" id="H_CITA" name="H_CITA" value="<?php echo $filaso ['H_CITA_BASE']  ?>" disabled>
 
             </div>
 

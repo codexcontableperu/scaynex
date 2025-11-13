@@ -21,8 +21,8 @@ if (isset($_SESSION['usuario'])) {
 <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="whatsaap/stilo_what.css">
-
-
+<link rel="stylesheet" href="barraprogreso.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style> 
 
   .formula form, tbla{
@@ -328,16 +328,41 @@ $idd=$_GET['idd'];
         </div>
     </div>
 
-    <div id="second-header" style="font-size: 14px">
-        <img src="whatsaap/user-icon.png" alt="Usuario" id="user-icon">
-        <a class="boton bton noselec" href="wt_prog_user.php?dni=<?php  echo $dni_user ; ?> ">Ordenes</a>
-        &nbsp &nbsp 
-        <a class="boton noselec " href="wt_panel_user.php?idp=<?php echo $idp ?>"><i class="fas fa-map-marker-alt"></i> BASE</a>
-        &nbsp &nbsp 
-        <a class="boton  noselec" href="wt_ruta_ruta.php?idp=<?php echo $idp ?>&idr=<?php echo $idr ?>"><i class="fas fa-map-marker-alt"></i> CARGA</a>
-        &nbsp &nbsp 
-        <a class="boton  selec" href=""><i class="fas fa-map-marker-alt"></i>DESCARGA</a>
+
+
+<div id="second-header">
+
+    <div class="container_progreso">
+    <div class="progress-bar">
+    
+    <div class="progress-line"></div>
+    
+    <a href="wt_prog_user.php" class="step ">
+    <div class="step-circle">1</div>
+    <div class="step-label">Órdenes</div>
+    </a>
+    
+    <a href="wt_panel_user.php?idp=<?php echo $idp ?>" class="step ">
+    <div class="step-circle">2</i></div>
+    <div class="step-label">Base</div>
+    </a>
+    
+    <a href="wt_ruta_ruta.php?idp=<?php echo $idp ?>&idr=<?php echo $idr ?>" class="step">
+    <div class="step-circle">3</div>
+    <div class="step-label">Carga</div>
+    </a>
+    
+    <a href="#" class="step active">
+    <div class="step-circle"><i class="fa-solid fa-truck truck" id="truck"></i></div>
+    <div class="step-label">Descarga</div>
+    </a>
     </div>
+    </div>
+</div>
+
+
+
+
 </div>    
 
 <?php

@@ -7,13 +7,12 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-$userup = $_SESSION['usuario'];
+$userup   = $_SESSION['usuario'];
 $id_userup = $_SESSION['id_usuario'];
-$dni_user = $_SESSION['user_dni'];
-?>
-<?php include("../data/conexion.php"); ?>
+$dni_user  = $_SESSION['user_dni'];
 
-<?php
+include("../data/conexion.php");
+
 // Procesar cierre de programación
 if (isset($_POST['cerrar_programacion'])) {
     $idp_cerrar = intval($_POST['idp_cerrar']);
@@ -23,11 +22,27 @@ if (isset($_POST['cerrar_programacion'])) {
     $stmt_cerrar->bind_param("i", $idp_cerrar);
     
     if ($stmt_cerrar->execute()) {
-        echo "<script>alert('Programación cerrada exitosamente.'); window.location.href='wt_prog_user.php?dni=$dni_user';</script>";
+    echo "<script>alert('Programación cerrada exitosamente.'); window.location.href='wt_prog_user.php';</script>";
     } else {
-        echo "<script>alert('Error al cerrar la programación.');</script>";
+    echo "<script>alert('Error al cerrar la programación.');</script>";
     }
     $stmt_cerrar->close();
+    exit;
+}
+
+// Procesar cierre de sesión desde el menú
+if (isset($_GET['logout'])) {
+    // Limpieza de sesión
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+    $params['path'], $params['domain'],
+    $params['secure'], $params['httponly']
+    );
+    }
+    session_destroy();
+    header("Location: ../index.php");
     exit;
 }
 ?>
@@ -35,7 +50,7 @@ if (isset($_POST['cerrar_programacion'])) {
 <?php include('includes/header.php'); ?>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="whatsaap/stilo_what.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* Estilos para programaciones */
 .titu {
@@ -110,25 +125,119 @@ if (isset($_POST['cerrar_programacion'])) {
 .modal-header.bg-warning .btn-close {
     filter: brightness(0);
 }
+
+/* Estilos para el menú desplegable de tres puntos */
+#menu-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown-menu-custom {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 220px;
+    z-index: 1000;
+    display: none;
+}
+
+.dropdown-menu-custom.show {
+    display: block;
+}
+
+.dropdown-menu-custom a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-menu-custom a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu-custom a:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown-menu-custom a i {
+    margin-right: 10px;
+    width: 20px;
+    display: inline-block;
+}
+
+/* Overlay para cerrar el menú al hacer clic fuera */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    display: none;
+}
+
+.menu-overlay.show {
+    display: block;
+}
 </style>
 
 <div id="header">
     <div id="whatsapp-text">
-        <span class="icon-user"></span> <?php echo $userup; ?> 
+    <span class="icon-user"></span> <?php echo htmlspecialchars($userup, ENT_QUOTES, 'UTF-8'); ?> 
     </div>
 
     <div id="header-icons">
-        <img src="whatsaap/camera-icon.png" alt="Cámara" id="camera-icon">
-        <img src="whatsaap/search-icon.png" alt="Buscar" id="search-icon">
-        <img src="whatsaap/menu-icon.png" alt="Menú" id="menu-icon">
+    <img src="whatsaap/camera-icon.png" alt="Cámara" id="camera-icon">
+    <img src="whatsaap/search-icon.png" alt="Buscar" id="search-icon">
+    <img src="whatsaap/menu-icon.png" alt="Menú" id="menu-icon" onclick="toggleMenu()">
     </div>
 </div>
 
-<div id="second-header">
-    <img src="whatsaap/user-icon.png" alt="Usuario" id="user-icon">
-    <a class="boton bton selec" href="wt_prog_user.php?dni=<?php echo $dni_user; ?>">Ordenes</a>
-    &nbsp &nbsp 
+<!-- Menú desplegable -->
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="dropdown-menu-custom" id="dropdownMenu">
+    <a href="solicita_prog.php">
+    <i class="bi bi-clipboard-plus"></i> Solicitar Programación
+    </a>
+    <a href="?logout=1" onclick="return confirm('¿Está seguro que desea cerrar sesión?')">
+    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+    </a>
 </div>
+
+
+<!-- barra de progreso  -->
+
+<link rel="stylesheet" href="barraprogreso.css">
+
+
+<div id="second-header">
+
+    <div class="container_progreso">
+    <div class="progress-bar">
+    
+    <div class="progress-line"></div>
+    
+    <a href="wt_prog_user.php" class="step active">
+    <div class="step-circle"><i class="fa-solid fa-truck truck" id="truck"></i></div>
+    <div class="step-label">Órdenes</div>
+    </a>
+
+    </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 <?php
 // Verificar la conexión
@@ -136,39 +245,84 @@ if (!$conexion) {
     die("Error en la conexión: " . mysqli_connect_error());
 }
 
-// Modificar la consulta SQL para incluir PENDIENTE = 1 y 2
-$sql = "SELECT Id_SERG, CONDUCTOR, ID_CLIENTE, S_FECHA, PLACA, AUXILIAR1, AUXILIAR2, AUXILIAR3, PENDIENTE 
-        FROM rd_segimientos_head 
-        WHERE PENDIENTE IN (1, 2)";
+$mi_id = intval($id_userup); // ID del usuario logueado
 
-$result = mysqli_query($conexion, $sql);
+// Consulta SQL filtrando por id_user del operador usando los nombres reales de columnas
+$sql = "SELECT 
+    Id_SERG,
+    CONDUCTOR, ID_CONDUC,
+    AUXILIAR1, ID_AUX1,
+    AUXILIAR2, ID_AUX2,
+    AUXILIAR3, ID_AUX3,
+    ID_CLIENTE, S_FECHA, PLACA, PENDIENTE
+    FROM rd_segimientos_head
+    WHERE PENDIENTE IN (1, 2)
+    AND (
+    ID_CONDUC = ?
+    OR ID_AUX1 = ?
+    OR ID_AUX2 = ?
+    OR ID_AUX3 = ?
+    )";
+
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("iiii", $mi_id, $mi_id, $mi_id, $mi_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $nueva_tabla = array();
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Añadir filas para cada operador
-        $nueva_tabla[] = array("TIPO_OPERADOR" => "CONDUCTOR", "NOMBRE" => $row["CONDUCTOR"], "Id_SERG" => $row["Id_SERG"], "PENDIENTE" => $row["PENDIENTE"], "ID_CLIENTE" => $row["ID_CLIENTE"], "S_FECHA" => $row["S_FECHA"], "PLACA" => $row["PLACA"]);
-        $nueva_tabla[] = array("TIPO_OPERADOR" => "AUXILIAR1", "NOMBRE" => $row["AUXILIAR1"], "Id_SERG" => $row["Id_SERG"], "PENDIENTE" => $row["PENDIENTE"], "ID_CLIENTE" => $row["ID_CLIENTE"], "S_FECHA" => $row["S_FECHA"], "PLACA" => $row["PLACA"]);
-        $nueva_tabla[] = array("TIPO_OPERADOR" => "AUXILIAR2", "NOMBRE" => $row["AUXILIAR2"], "Id_SERG" => $row["Id_SERG"], "PENDIENTE" => $row["PENDIENTE"], "ID_CLIENTE" => $row["ID_CLIENTE"], "S_FECHA" => $row["S_FECHA"], "PLACA" => $row["PLACA"]);
-        $nueva_tabla[] = array("TIPO_OPERADOR" => "AUXILIAR3", "NOMBRE" => $row["AUXILIAR3"], "Id_SERG" => $row["Id_SERG"], "PENDIENTE" => $row["PENDIENTE"], "ID_CLIENTE" => $row["ID_CLIENTE"], "S_FECHA" => $row["S_FECHA"], "PLACA" => $row["PLACA"]);
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+    if ($row["ID_CONDUC"] == $mi_id) {
+    $nueva_tabla[] = array(
+    "TIPO_OPERADOR" => "CONDUCTOR",
+    "NOMBRE" => $row["CONDUCTOR"],
+    "ID_USER" => $row["ID_CONDUC"],
+    "Id_SERG" => $row["Id_SERG"],
+    "PENDIENTE" => $row["PENDIENTE"],
+    "ID_CLIENTE" => $row["ID_CLIENTE"],
+    "S_FECHA" => $row["S_FECHA"],
+    "PLACA" => $row["PLACA"]
+    );
+    }
+    if ($row["ID_AUX1"] == $mi_id) {
+    $nueva_tabla[] = array(
+    "TIPO_OPERADOR" => "AUXILIAR1",
+    "NOMBRE" => $row["AUXILIAR1"],
+    "ID_USER" => $row["ID_AUX1"],
+    "Id_SERG" => $row["Id_SERG"],
+    "PENDIENTE" => $row["PENDIENTE"],
+    "ID_CLIENTE" => $row["ID_CLIENTE"],
+    "S_FECHA" => $row["S_FECHA"],
+    "PLACA" => $row["PLACA"]
+    );
+    }
+    if ($row["ID_AUX2"] == $mi_id) {
+    $nueva_tabla[] = array(
+    "TIPO_OPERADOR" => "AUXILIAR2",
+    "NOMBRE" => $row["AUXILIAR2"],
+    "ID_USER" => $row["ID_AUX2"],
+    "Id_SERG" => $row["Id_SERG"],
+    "PENDIENTE" => $row["PENDIENTE"],
+    "ID_CLIENTE" => $row["ID_CLIENTE"],
+    "S_FECHA" => $row["S_FECHA"],
+    "PLACA" => $row["PLACA"]
+    );
+    }
+    if ($row["ID_AUX3"] == $mi_id) {
+    $nueva_tabla[] = array(
+    "TIPO_OPERADOR" => "AUXILIAR3",
+    "NOMBRE" => $row["AUXILIAR3"],
+    "ID_USER" => $row["ID_AUX3"],
+    "Id_SERG" => $row["Id_SERG"],
+    "PENDIENTE" => $row["PENDIENTE"],
+    "ID_CLIENTE" => $row["ID_CLIENTE"],
+    "S_FECHA" => $row["S_FECHA"],
+    "PLACA" => $row["PLACA"]
+    );
+    }
     }
 }
-
-// Obtener nombre del usuario
-$query = "SELECT usuarios.id_user, usuarios.user_nombre FROM usuarios WHERE usuarios.id_user = $id_userup";
-$result = mysqli_query($conexion, $query);
-
-if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $nombre_buscado = $row['user_nombre'];
-} else {
-    $nombre_buscado = "No encontrado";
-}
-
-// Filtrar la nueva tabla por el nombre específico
-$resultado = array_filter($nueva_tabla, function($fila) use ($nombre_buscado) {
-    return $fila["NOMBRE"] === $nombre_buscado;
-});
+$stmt->close();
 ?>
 
 <br>
@@ -179,65 +333,62 @@ $resultado = array_filter($nueva_tabla, function($fila) use ($nombre_buscado) {
 
 <div class="botones">
     <div class="container text-center">
-        <div class="row d-flex justify-content-center">
-            <?php 
-            if (count($resultado) > 0) {
-                foreach ($resultado as $filaso) { 
-                    // Determinar la clase del botón según PENDIENTE
-                    $btn_class = ($filaso['PENDIENTE'] == 2) ? 'btn-pendiente-2' : 'btn-dark';
-                ?>
-                    <a class="btn btn-lg <?php echo $btn_class; ?> square-btn mx-2" style="color: white; position: relative;" href="wt_panel_user.php?idp=<?php echo $filaso['Id_SERG']?>">
-                        
-                        <?php if ($filaso['PENDIENTE'] == 1): ?>
-                            <!-- X para cerrar solo para PENDIENTE = 1 -->
-                            <span class="icon-close-prog" onclick="event.preventDefault(); abrirModalCerrar(<?php echo $filaso['Id_SERG']; ?>);">
-                                ✕
-                            </span>
-                        <?php endif; ?>
-                        
-                        <span class="icon-truck"></span><br>
-                        <span style="font-size: 13px;"><?php echo $filaso['TIPO_OPERADOR']?></span><br>
-                        <?php echo $filaso['PLACA']?><br>
-                        <span style="font-size: 13px;"><?php echo $filaso['ID_CLIENTE']?></span><br>
-                        <span style="font-size: 13px;"><?php echo $filaso['S_FECHA']?></span>
-                    </a>
-                <?php 
-                } 
-            } else {
-                echo '<div class="col-12"><div class="alert alert-info">No hay programaciones activas para tu usuario.</div></div>';
-            }
-            ?>
-        </div>
+    <div class="row d-flex justify-content-center">
+    <?php 
+    if (count($nueva_tabla) > 0) {
+    foreach ($nueva_tabla as $filaso) { 
+    $btn_class = ($filaso['PENDIENTE'] == 2) ? 'btn-pendiente-2' : 'btn-dark';
+    ?>
+    <a class="btn  <?php echo $btn_class; ?> square-btn mx-2" style="color: white; position: relative;" href="wt_panel_user.php?idp=<?php echo intval($filaso['Id_SERG']); ?>">
+    <?php if ($filaso['PENDIENTE'] == 1): ?>
+    <span class="icon-close-prog" onclick="event.preventDefault(); abrirModalCerrar(<?php echo intval($filaso['Id_SERG']); ?>);">
+    ✕
+    </span>
+    <?php endif; ?>
+    
+    <span class="icon-truck"></span><br>
+    <span style="font-size: 13px;"><?php echo htmlspecialchars($filaso['TIPO_OPERADOR'], ENT_QUOTES, 'UTF-8'); ?></span><br>
+    <?php echo htmlspecialchars($filaso['PLACA'], ENT_QUOTES, 'UTF-8'); ?><br>
+    <span style="font-size: 13px;"><?php echo htmlspecialchars($filaso['ID_CLIENTE'], ENT_QUOTES, 'UTF-8'); ?></span><br>
+    <span style="font-size: 13px;"><?php echo htmlspecialchars($filaso['S_FECHA'], ENT_QUOTES, 'UTF-8'); ?></span>
+    </a>
+    <?php 
+    } 
+    } else {
+    echo '<div class="col-12"><div class="alert alert-info">No hay programaciones activas para tu usuario.</div></div>';
+    }
+    ?>
+    </div>
     </div>
 </div>
 
 <!-- Modal de confirmación para cerrar programación -->
 <div class="modal fade" id="modalCerrarProgramacion" tabindex="-1" aria-labelledby="modalCerrarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="modalCerrarLabel">
-                    ⚠️ Cerrar Programación
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-warning" role="alert">
-                    <strong>⚠️ Importante:</strong> Solo debe cerrar la programación si <strong>todas las entregas han sido conformes</strong>.
-                </div>
-                <p>¿Está seguro de que desea cerrar esta programación?</p>
-                <p class="text-muted small">Esta acción cambiará el estado de la programación y no se podrá deshacer fácilmente.</p>
-            </div>
-            <div class="modal-footer">
-                <form method="POST" id="formCerrarProgramacion">
-                    <input type="hidden" name="idp_cerrar" id="idp_cerrar" value="">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="cerrar_programacion" class="btn btn-warning">
-                        <i class="bi bi-folder-check"></i> Sí, Cerrar Programación
-                    </button>
-                </form>
-            </div>
-        </div>
+    <div class="modal-content">
+    <div class="modal-header bg-warning">
+    <h5 class="modal-title" id="modalCerrarLabel">
+    ⚠️ Cerrar Programación
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+    <div class="alert alert-warning" role="alert">
+    <strong>⚠️ Importante:</strong> Solo debe cerrar la programación si <strong>todas las entregas han sido conformes</strong>.
+    </div>
+    <p>¿Está seguro de que desea cerrar esta programación?</p>
+    <p class="text-muted small">Esta acción cambiará el estado de la programación y no se podrá deshacer fácilmente.</p>
+    </div>
+    <div class="modal-footer">
+    <form method="POST" id="formCerrarProgramacion">
+    <input type="hidden" name="idp_cerrar" id="idp_cerrar" value="">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="submit" name="cerrar_programacion" class="btn btn-warning">
+    <i class="bi bi-folder-check"></i> Sí, Cerrar Programación
+    </button>
+    </form>
+    </div>
+    </div>
     </div>
 </div>
 
@@ -247,9 +398,42 @@ function abrirModalCerrar(idp) {
     var modal = new bootstrap.Modal(document.getElementById('modalCerrarProgramacion'));
     modal.show();
 }
+
+function toggleMenu() {
+    var menu = document.getElementById('dropdownMenu');
+    var overlay = document.getElementById('menuOverlay');
+    
+    if (menu.classList.contains('show')) {
+    menu.classList.remove('show');
+    overlay.classList.remove('show');
+    } else {
+    menu.classList.add('show');
+    overlay.classList.add('show');
+    }
+}
+
+// Cerrar el menú al presionar ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+    var menu = document.getElementById('dropdownMenu');
+    var overlay = document.getElementById('menuOverlay');
+    if (menu.classList.contains('show')) {
+    menu.classList.remove('show');
+    overlay.classList.remove('show');
+    }
+    }
+});
+
+// Cerrar el menú si se hace clic fuera (mejora)
+document.addEventListener('click', function(event) {
+    var menu = document.getElementById('dropdownMenu');
+    var menuIcon = document.getElementById('menu-icon');
+    if (!menu.contains(event.target) && event.target !== menuIcon) {
+    menu.classList.remove('show');
+    document.getElementById('menuOverlay').classList.remove('show');
+    }
+});
 </script>
 
-<!-- menu reportes-->
 <?php include('wt_menureportes.php'); ?>
-
 <?php include('includes/footer.php'); ?>
