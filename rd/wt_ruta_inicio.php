@@ -286,6 +286,7 @@ WHERE tipo='t'
                                     <input type="hidden" name="tipo_dh" value="D">
                                     <input type="hidden" name="id_user" value="<?php echo $id_userup; ?>">
                                     <input type="hidden" name="id_programacion" value="<?php echo $idp; ?>">
+                                    <input type="hidden" name="dni_user" value="<?php echo $dni_user; ?>">
 
                                     <div class="mb-3">
                                         <label for="id_concepto_ing" class="form-label">Concepto</label>

@@ -1,0 +1,31 @@
+Quiero que, a partir de una imagen tipo hoja de ruta/logística (programación de salidas de camiones), generes un único statement SQL INSERT con múltiples filas para cargar datos en la tabla MySQL rd_segimientos_head.
+El recuento de columnas DEBE DE  coincidir con el recuento de valores en la fila
+Instrucciones y contexto:
+"La sentencia INSERT INTO NO debe incluir la columna Id_SERG (dado que es AUTO_INCREMENT). 
+Genera un único INSERT INTO ... VALUES con múltiples tuplas, 
+revisa todas las filas y no cometas omisiones
+
+TABLE  `rd_segimientos_head` (
+    `Id_SERG` int NOT NULL AUTO_INCREMENT,
+    `S_FECHA` date,
+    `EPS` varchar(10) DEFAULT NULL,
+    `TEMPERATURA` varchar(19) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `PLACA` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `CAPACIDAD_VEHICULO` varchar(10) DEFAULT NULL COMMENT 'Capacidad del vehículo (TN)',
+    `CONDUCTOR` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `AUXILIAR1` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `AUXILIAR2` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `AUXILIAR3` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+    `RESGUARDO` varchar(2) DEFAULT 'NO',
+    `TIPO_DESPACHO` varchar(20) NOT NULL,
+    `NUM_PALETAS` int DEFAULT NULL COMMENT 'Número de paletas a transportar',
+    `ID_CLIENTE` varchar(50) CHARACTER SET utf32 COLLATE utf32_spanish_ci DEFAULT NULL,
+    `CUENTA_CLIENTE` varchar(50) CHARACTER SET utf32 COLLATE utf32_spanish_ci DEFAULT NULL,
+    `CUENTA` varchar(50) DEFAULT NULL,
+    `EMPRESA` varchar(50) DEFAULT NULL,
+    `H_CITA_BASE` time DEFAULT NULL,
+    `DATALOGGER` varchar(2) DEFAULT 'NO'
+    `H_CITA_R` time NOT NULL,
+    `OBSERVACIONES_PROG` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL, 
+    `SOLICITUD_ESTIBA` varchar(2) DEFAULT 'NO' COMMENT 'Solicitud de estiba (SI/NO)',
+    `DEVOLUCIONES` text COMMENT 'Información de devoluciones', )

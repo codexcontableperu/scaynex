@@ -356,7 +356,6 @@ if ($numfilasIF>0) {
 
 
 
-
 <?php
 // Realiza la consulta
 $queryIF = "

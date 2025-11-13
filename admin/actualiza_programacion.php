@@ -76,7 +76,7 @@
             $result = $conexion->query($sql_user);
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                $conductor_nombre = $user['user_nombre'];
+                $conductor_nombre = $user['user_nick'] . ' - ' . $user['user_nombre'];
             }
         }
         
@@ -85,7 +85,7 @@
             $result = $conexion->query($sql_user);
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                $auxiliar1_nombre =$user['user_nombre'];
+                $auxiliar1_nombre = $user['user_nick'] . ' - ' . $user['user_nombre'];
             }
         }
         
@@ -94,7 +94,7 @@
             $result = $conexion->query($sql_user);
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                $auxiliar2_nombre = $user['user_nombre'];
+                $auxiliar2_nombre = $user['user_nick'] . ' - ' . $user['user_nombre'];
             }
         }
         
@@ -103,7 +103,7 @@
             $result = $conexion->query($sql_user);
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                $auxiliar3_nombre = $user['user_nombre'];
+                $auxiliar3_nombre = $user['user_nick'] . ' - ' . $user['user_nombre'];
             }
         }
         
@@ -112,7 +112,7 @@
             $result = $conexion->query($sql_user);
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                $supervisor_nombre = $user['user_nombre'];
+                $supervisor_nombre = $user['user_nick'] . ' - ' . $user['user_nombre'];
             }
         }
         
@@ -290,7 +290,7 @@
                                     $selected = ($registro['ID_CONDUC'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -303,7 +303,7 @@
                                     $selected = ($registro['ID_AUX1'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -316,7 +316,7 @@
                                     $selected = ($registro['ID_AUX2'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -329,7 +329,7 @@
                                     $selected = ($registro['ID_AUX3'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -340,7 +340,7 @@
                                 <option value="">Seleccionar supervisor</option>
                                 <?php foreach($usuarios as $usuario): ?>
                                 <option value="<?php echo $usuario['id_user']; ?>">
-                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
