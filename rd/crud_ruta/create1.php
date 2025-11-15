@@ -11,8 +11,6 @@ WHERE (((hruta.id_serv)=$ids))";
 $resultR=mysqli_query($conexion, $queryR);
 $numfilas = mysqli_num_rows($resultR);
 
-echo $numfilas ;
-
  
 if ($numfilas >0) {
 

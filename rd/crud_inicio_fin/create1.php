@@ -29,8 +29,7 @@ $result = mysqli_query($conexion, $query);
 
 $query = "UPDATE rd_segimientos_head SET
          
-        ESTADO_IDP = 1,
-        PENDIENTE = 0
+        ESTADO_IDP = 1
     WHERE Id_SERG = $idp";
 
     mysqli_query($conexion, $query);

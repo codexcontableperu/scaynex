@@ -119,10 +119,28 @@ $idp = isset($_GET['idp']) ? $_GET['idp'] : 0;
     </div>
 </div>
 
+<!-- barra de progreso  -->
+
+<link rel="stylesheet" href="barraprogreso.css">
+
+
 <div id="second-header">
-    <img src="whatsaap/user-icon.png" alt="Usuario" id="user-icon">
-    <a class="boton bton selec" href="wt_prog_user.php?dni=<?php echo htmlspecialchars($dni_user); ?>">Ordenes</a>
+
+    <div class="container_progreso">
+    <div class="progress-bar">
+    
+    <div class="progress-line"></div>
+    
+    <a href="wt_prog_user.php" class="step active">
+    <div class="step-circle"><i class="fa-solid fa-truck truck" id="truck"></i></div>
+    <div class="step-label">Órdenes</div>
+    </a>
+
+    </div>
+    </div>
 </div>
+
+
 
 <div class="main-container">
     <div class="titu">
@@ -155,7 +173,7 @@ $idp = isset($_GET['idp']) ? $_GET['idp'] : 0;
             <div class="card shadow-sm">
                 <div class="form-header form-ingreso">
                     <i class="bi bi-arrow-down-circle"></i>
-                    <h5 class="mb-0">Registro de Ingreso</h5>
+                    <h5 class="mb-0">Registro de Ingreso tttt</h5>
                 </div>
                 <div class="card-body">
                     <form action="crud_gastos/guardar_operacion.php" method="POST" enctype="multipart/form-data">
@@ -196,7 +214,51 @@ $idp = isset($_GET['idp']) ? $_GET['idp'] : 0;
 
                         <div class="mb-3">
                             <label for="doc_imagen_ing" class="form-label">Subir Comprobante (Imagen)</label>
-                            <input type="file" class="form-control" id="doc_imagen_ing" name="doc_imagen" accept="image/*">
+<!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="doc_imagen_ing" 
+       name="doc_imagen" 
+       accept="image/*">
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-dark" onclick="openCamera()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGallery()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInput = document.getElementById('doc_imagen_ing');
+  const fileName = document.getElementById('file-name');
+  
+  function openCamera() {
+    fileInput.setAttribute('capture', 'environment');
+    fileInput.click();
+  }
+  
+  function openGallery() {
+    fileInput.removeAttribute('capture');
+    fileInput.click();
+  }
+  
+  // Mostrar nombre del archivo seleccionado
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileName.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
+
                         </div>
 
                         <button type="submit" class="btn btn-success w-100">
@@ -253,7 +315,50 @@ $idp = isset($_GET['idp']) ? $_GET['idp'] : 0;
 
                         <div class="mb-3">
                             <label for="doc_imagen_egr" class="form-label">Subir Comprobante (Imagen)</label>
-                            <input type="file" class="form-control" id="doc_imagen_egr" name="doc_imagen" accept="image/*">
+                         
+<!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="doc_imagen_egr" 
+       name="doc_imagen" 
+       accept="image/*">
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-dark" onclick="openCameraEgr()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGalleryEgr()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name-egr" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInputEgr = document.getElementById('doc_imagen_egr');
+  const fileNameEgr = document.getElementById('file-name-egr');
+  
+  function openCameraEgr() {
+    fileInputEgr.setAttribute('capture', 'environment');
+    fileInputEgr.click();
+  }
+  
+  function openGalleryEgr() {
+    fileInputEgr.removeAttribute('capture');
+    fileInputEgr.click();
+  }
+  
+  fileInputEgr.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileNameEgr.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
                         </div>
 
                         <button type="submit" class="btn btn-danger w-100">

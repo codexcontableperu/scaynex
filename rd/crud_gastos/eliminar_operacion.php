@@ -11,10 +11,19 @@ if (isset($_GET['id'])) {
 
     if (mysqli_query($conexion, $query)) {
         // Redireccionamos al panel del usuario con id de programación
-        echo '<script type="text/javascript">
-            window.location.href="./../wt_panel_user.php?idp=' . $id_programacion . '";
-        </script>';
-        exit;
+        if (!empty($id_programacion)) { // ← AQUÍ FALTABA EL PARÉNTESIS DE CIERRE
+            // Si $id_programacion existe y es diferente de 0 o null
+            echo '<script type="text/javascript">
+                window.location.href="./../wt_panel_user.php?idp=' . $id_programacion . '";
+            </script>';
+            exit;
+        } else {
+            // Caso contrario
+            echo '<script type="text/javascript">
+                window.location.href="./../wt_prog_user.php";
+            </script>';
+            exit;
+        }
     } else {
         echo "Error al eliminar el registro: " . mysqli_error($conexion);
     }

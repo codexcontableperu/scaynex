@@ -1,0 +1,14 @@
+Iniciando procesar_solicitud.php
+Datos POST: Array
+(
+    [id_guiar] => 1
+    [accion] => solicitar
+)
+
+Iniciando procesar_solicitud.php
+Datos POST: Array
+(
+    [id_guiar] => 1
+    [accion] => solicitar
+)
+

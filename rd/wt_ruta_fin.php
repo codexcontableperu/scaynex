@@ -77,7 +77,7 @@ WHERE Id_SERG=$idp ;
 
      }
 
-     if ($filas2 ['FOTOS'] === "NO" ) {
+     if ($filas2 ['FOTO_FIN'] === "no" ) {
           ?> 
           <a href="#FOTOSR" class="btn btn-light" data-toggle="modal"> 
             <span class="icon-image"></span><br>
@@ -88,7 +88,7 @@ WHERE Id_SERG=$idp ;
           ?> 
             <a href="#FOTOSR" class="btn btn-primary" data-toggle="modal">
           <span class="icon-image"></span> <br>
-          <small><?php echo $filas2['FOTOS']?></small> 
+          <small><?php echo $filas2['FOTO_FIN']?></small> 
           </a> 
           <?php
 
@@ -272,14 +272,59 @@ WHERE (((update2.tipo)='t') AND ((update2.activo)='si'));
   
 <form  action="crud_fotos/createimg.php" method="POST" enctype="multipart/form-data" class="colm">
 <input class="form-control"  type="hidden" id="tipo" name="tipo" value="RETORNO" readonly>
-<input class="form-control"  type="hidden" id="Redirigir" name="Redirigir" value="panel_user" readonly>
+<input class="form-control"  type="hidden" id="Redirigir" name="Redirigir" value="panel_fin" readonly>
 <input class="form-control"  type="hidden" id="idp" name="idp" value="<?php echo $idp ; ?> " readonly>
 <input class="form-control"  type="hidden" id="idr" name="idr" value="" readonly>  
 <input class="form-control"  type="hidden" id="idd" name="idd" value="" readonly>
 
     <div class="form-group">
         <label for="head_imagen">Imagen: </label>
-        <input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
+
+<!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="head_imagenfin" 
+       name="head_imagen" 
+       accept="image/*" required>
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-dark" onclick="openCamera()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGallery()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-namefin" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInputfin = document.getElementById('head_imagenfin');
+  const fileNamefin = document.getElementById('file-namefin');
+  
+  function openCamera() {
+    fileInputfin.setAttribute('capture', 'environment');
+    fileInputfin.click();
+  }
+  
+  function openGallery() {
+    fileInputfin.removeAttribute('capture');
+    fileInputfin.click();
+  }
+  
+  // Mostrar nombre del archivo seleccionado
+  fileInputfin.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileNamefin.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
+
         <label for="head_imagen">Descripción : </label>
         <input class="form-control" type="txt" id="ALCANCE" name="ALCANCE" required>
     </div>

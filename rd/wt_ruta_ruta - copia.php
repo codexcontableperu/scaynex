@@ -199,7 +199,7 @@ $idr=$_GET['idr'];
 
 </style>
 
-<br><br><br><br>
+<br><br><br>
 
 
 <div class="dropdown-divider"></div>
@@ -764,96 +764,89 @@ if ($numfilasGTR != 0) {
 
       ?>
  <!-- Botón para abrir el offcanvas -->     
-          <a class="btn btn-warning" type="button" data-toggle="modal" data-target="#modalGuias"> 
-            <i class="fa-solid fa-file"></i> <br>
+          <a class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasGuias"> 
+            <span class="icon-compass"></span> <br>
             <span>Solicitar</span><br>
             <span>G. Transporte</span>
           </a>
 
 <!-- Offcanvas (oculto por defecto) -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalGuias" tabindex="-1" role="dialog" aria-labelledby="modalGuiasLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalGuiasLabel">Solicitar Guías Remision Transportista</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasGuias" aria-labelledby="offcanvasGuiasLabel" style="width: 70%;" data-bs-backdrop="true" data-bs-scroll="false">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasGuiasLabel">Solicitar Guías Remision Transportista</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="table-responsive">
+            <table class="table table-sm small " style="font-size: 0.65rem;">
+                <thead class="table-dark">
+                    <tr>
+                        <th>CLIENTE</th>
+                        <th>GUÍA REM</th>
+                        <th>FACTURA</th>
+                        <th>ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Consulta para obtener los datos relacionados
+                    $sql = "SELECT 
+                                rd.pe_cliente AS cliente,
+                                rd.desg_distrito AS distrito,
+                                gr.gr_serienum AS guia_remitente,
+                                gr.fact_cliente AS factura,
+                                gr.GUIA_TRANS AS GUIA_T,
+                                gr.id_guiar
+                            FROM guias_remitente gr
+                            INNER JOIN rd_descargas rd ON gr.id_desg = rd.id_descaga
+                            WHERE gr.id_ruta = ?
+                            ORDER BY rd.pe_cliente";
+                    
+                    $stmt = $conexion->prepare($sql);
+                    $stmt->bind_param("i", $idr);
+                    $stmt->execute();
+                    $resultado = $stmt->get_result();
+                    
+if ($resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        // Determinar el color del botón según el estado
+        $estado = strtolower(trim($fila['GUIA_T']));
+        $colorBoton = 'btn-secondary'; // Color por defecto
+        $txtBoton = ucfirst($fila['GUIA_T']); // Texto por defecto
+        $estadoData = $estado; // Estado para data-estado
+        
+        if ($estado == 'pendiente') {
+            $colorBoton = 'btn-success';
+            $txtBoton = 'Solicitar';
+        } elseif ($estado == 'solicitado') {
+            $colorBoton = 'btn-warning';
+            $txtBoton = 'Solicitado';
+        } elseif ($estado == 'emitido') {
+            $colorBoton = 'btn-primary';
+            $txtBoton = 'Emitido';
+        }
+        
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($fila['cliente']) . "<br><small class='text-muted'>" . htmlspecialchars($fila['distrito']) . "</small></td>";
+        echo "<td>" . htmlspecialchars($fila['guia_remitente']) . "</td>";
+        echo "<td>" . htmlspecialchars($fila['factura']) . "</td>";
+        echo "<td>
+                <button class='btn btn-sm " . $colorBoton . " btn-solicitar' 
+                        data-id='" . $fila['id_guiar'] . "'
+                        data-estado='" . $estadoData . "'>
+                    " . htmlspecialchars($txtBoton) . "
                 </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-sm small" style="font-size: 0.65rem;">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>CLIENTE</th>
-                                <th>GUÍA REM</th>
-                                <th>FACTURA</th>
-                                <th>ACCIÓN</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Consulta para obtener los datos relacionados
-                            $sql = "SELECT 
-                                        rd.pe_cliente AS cliente,
-                                        rd.desg_distrito AS distrito,
-                                        gr.gr_serienum AS guia_remitente,
-                                        gr.fact_cliente AS factura,
-                                        gr.GUIA_TRANS AS GUIA_T,
-                                        gr.id_guiar
-                                    FROM guias_remitente gr
-                                    INNER JOIN rd_descargas rd ON gr.id_desg = rd.id_descaga
-                                    WHERE gr.id_ruta = ?
-                                    ORDER BY rd.pe_cliente";
-                            
-                            $stmt = $conexion->prepare($sql);
-                            $stmt->bind_param("i", $idr);
-                            $stmt->execute();
-                            $resultado = $stmt->get_result();
-                            
-                            if ($resultado->num_rows > 0) {
-                                while ($fila = $resultado->fetch_assoc()) {
-                                    // Determinar el color del botón según el estado
-                                    $estado = strtolower(trim($fila['GUIA_T']));
-                                    $colorBoton = 'btn-secondary'; // Color por defecto
-                                    
-                                    if ($estado == 'pendiente') {
-                                        $colorBoton = 'btn-success';
-                                    } elseif ($estado == 'solicitado') {
-                                        $colorBoton = 'btn-warning';
-                                    } elseif ($estado == 'emitido') {
-                                        $colorBoton = 'btn-primary';
-                                    }
-                                    
-                                    echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($fila['cliente']) . "<br><small class='text-muted'>" . htmlspecialchars($fila['distrito']) . "</small></td>";
-                                    echo "<td>" . htmlspecialchars($fila['guia_remitente']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($fila['factura']) . "</td>";
-                                    echo "<td>
-                                            <button class='btn btn-sm " . $colorBoton . " btn-solicitar' 
-                                                    data-id='" . $fila['id_guiar'] . "'
-                                                    data-estado='" . htmlspecialchars($fila['GUIA_T']) . "'>
-                                                " . htmlspecialchars(ucfirst($fila['GUIA_T'])) . "
-                                            </button>
-                                          </td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='4' class='text-center'>No hay guías para esta ruta</td></tr>";
-                            }
-                            
-                            $stmt->close();
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
+              </td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='4' class='text-center'>No hay guías para esta ruta</td></tr>";
+}
+                    
+                    $stmt->close();
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -863,43 +856,54 @@ if ($numfilasGTR != 0) {
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('btn-solicitar')) {
-            const btn = e.target;
-            const idGuia = btn.getAttribute('data-id');
-            const estadoActual = btn.getAttribute('data-estado').toLowerCase().trim();
-
-            // Si no está pendiente, solo ignoramos el click (sin alert)
+            const idGuia = e.target.getAttribute('data-id');
+            const estadoActual = e.target.getAttribute('data-estado').toLowerCase().trim();
+            
+            // Solo procesar si está pendiente
             if (estadoActual !== 'pendiente') {
                 return;
             }
-
-            // Sin confirm, se solicita directo
+            
+            // Guardar estado original
+            const originalText = e.target.textContent;
+            const originalClasses = e.target.className;
+            
+            // Mostrar estado de carga
+            e.target.textContent = '...';
+            e.target.disabled = true;
+            
+            // Petición silenciosa
             fetch('crud_guiarem/procesar_solicitud.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'id_guiar=' + encodeURIComponent(idGuia) + '&accion=solicitar'
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'id_guiar=' + idGuia + '&accion=solicitar'
             })
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    btn.textContent = 'Solicitado';
-                    btn.classList.remove('btn-success');
-                    btn.classList.add('btn-warning');
-                    btn.setAttribute('data-estado', 'solicitado');
-                    // Sin alert, solo cambio visual
+                    // Actualizar a estado "solicitado"
+                    e.target.textContent = 'Solicitado';
+                    e.target.classList.remove('btn-success');
+                    e.target.classList.add('btn-warning');
+                    e.target.setAttribute('data-estado', 'solicitado');
                 } else {
-                    alert('Error al procesar la solicitud: ' + (data.error || 'Error desconocido'));
+                    // Error - restaurar estado
+                    e.target.textContent = originalText;
+                    e.target.disabled = false;
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error en la conexión');
+            .catch(() => {
+                // Error - restaurar estado
+                e.target.textContent = originalText;
+                e.target.disabled = false;
             });
         }
     });
 });
 </script>
+
+
+
 
 
 
@@ -910,7 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
       <a data-toggle="modal" data-target="#descarga" class="btn btn-lg btn-outline-success square-btn" style="font-size: 13px;"><span class="icon-plus">
-        <br>Nueva Descarga</a>
+        <br> Nueva Descarga</a>
     </div>
   </div>
 </div>
@@ -918,28 +922,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<!-- SECCION DEL PROCESO -->
-  <div class="botones">
-  
-<a href="wt_panel_user.php?idp=<?php echo $idp ?>" class="btn btn-secondary btn-block custom-btn"> 
-  CERRAR</a>
-  </div> 
-
-
-
-
-
-<div class="dropdown-divider"></div>
-
 
 
 
 <!-- Modal eliminar-->
-<div class="modal fade" id="elimina" tabindex="-1" role="dialog" aria-labelledby="eliminadescarga" aria-hidden="true">
+<div class="modal fade" id="elimina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="eliminadescarga">Eliminar Registro de Descarga</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Registro de Descarga</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -983,13 +974,84 @@ $resultS=mysqli_query($conexion, $queryS);
 
 
 
-
-<!-- Modal Nueva Descarga-->
-<div class="modal fade" id="descarga" tabindex="-1" role="dialog" aria-labelledby="nuevadescarga" aria-hidden="true">
+<!-- Modal solicitar g transporte-->
+<div class="modal fade" id="nGUIATRANSP" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="nuevadescarga">Nueva Descarga</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Solicitar Guia Transportista</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<div class="dropdown-divider"></div>
+
+<h6 >GUIAS DE REMISION :</h6>      
+<?php
+$queryS="
+SELECT guias_remitente.id_ruta, guias_remitente.gr_serienum, guias_remitente.fact_cliente, guias_remitente.gr_bultos
+FROM guias_remitente
+WHERE (((guias_remitente.id_ruta)=$idr));
+";
+$resultS=mysqli_query($conexion, $queryS);
+
+?>
+
+<?php while($filasS=mysqli_fetch_assoc($resultS)) { ?>
+
+       GR: <?php echo $filasS ['gr_serienum']?> FT: <?php echo $filasS ['fact_cliente']?> BT: <?php echo $filasS ['gr_bultos']?><br>
+
+<?php } ?>
+
+<div class="dropdown-divider"></div>
+
+<form  action="crud_gtransp/create.php" method="POST" enctype="multipart/form-data" class="colm">
+<input class="form-control"  type="hidden" id="idp" name="idp" value="<?php echo $idp ; ?> " readonly>
+<input class="form-control"  type="hidden" id="idr" name="idr" value="<?php echo $idr ; ?> " readonly>
+<input class="form-control"  type="hidden" id="gt_solicita" name="gt_solicita" value="<?php echo $id_userup ; ?> " readonly>
+
+
+<div class="form-group">
+    <label for="gt_observ">OBSERVACION:</label>    
+    <!-- Campo de texto para ingresar observaciones -->
+    <textarea id="gt_observ" name="gt_observ" class="form-control" rows="2" placeholder="Ingrese su observación aquí..."></textarea>
+</div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block" id="guardar" name="guardar">SOLICITAR</button>
+</form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal Nueva Descarga-->
+<div class="modal fade" id="descarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nueva Descarga</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1196,17 +1258,29 @@ WHERE tipo='t'
 
 
 
+<!-- SECCION DEL PROCESO -->
+  <div class="botones">
+  
+<a href="wt_panel_user.php?idp=<?php echo $idp ?>" class="btn btn-secondary btn-block custom-btn"> <span  class=" icon-folder-open "> </span></span>CERRAR</a>
+  </div>
 
 
 
 
 
-<!-- Modal ACTUALIZAR PALETAS Y BULTOS  DE CARGA-->
-<div class="modal fade" id="SCARGAS" tabindex="-1" role="dialog" aria-labelledby="actualizacarga" aria-hidden="true">
+<div class="dropdown-divider"></div>
+
+
+
+
+
+
+<!-- Modal SCARGA-->
+<div class="modal fade" id="SCARGAS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="actualizacarga">CARGA</h5>
+        <h5 class="modal-title" id="exampleModalLabel">CARGA</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1266,7 +1340,11 @@ WHERE tipo='t'
 
 
 
-<!-- MODAL FOTOS DE LLEGADA A ALMACEN -->
+
+
+
+
+
 
 
 <div class="modal" tabindex="-1" role="dialog" id="FOTOS">
@@ -1348,9 +1426,6 @@ WHERE tipo='t'
   </div>
 </div>
 
-
-<!-- MODAL FOTOS DE INICIO DE CARGA -->
-
 <div class="modal" tabindex="-1" role="dialog" id="FOTOS1">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -1378,7 +1453,7 @@ WHERE tipo='t'
        class="form-control d-none" 
        id="head_imagen2" 
        name="head_imagen" 
-       accept="image/*" required>
+       accept="image/*">
 
 <!-- Botones con Bootstrap -->
 <div class="d-flex gap-2 border rounded p-3">
@@ -1432,9 +1507,6 @@ WHERE tipo='t'
   </div>
 </div>
 
-
-<!-- MODAL FOTOS DE SALIDA DE ALMACEN -->
-
 <div class="modal" tabindex="-1" role="dialog" id="FOTOS2">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -1461,7 +1533,7 @@ WHERE tipo='t'
        class="form-control d-none" 
        id="head_imagen3" 
        name="head_imagen" 
-       accept="image/*" required>
+       accept="image/*">
 
 <!-- Botones con Bootstrap -->
 <div class="d-flex gap-2 border rounded p-3">
@@ -1519,11 +1591,11 @@ WHERE tipo='t'
 
 
 <!-- Modal nuevo dataloger -->
-<div class="modal fade" id="ndataloger" tabindex="-1" role="dialog" aria-labelledby="registrodataloger" aria-hidden="true">
+<div class="modal fade" id="ndataloger" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="registrodataloger">Nuevo Dataloger</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo Dataloger</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1637,7 +1709,7 @@ WHERE tipo='t'
 
 <!-- Modal nuevo servicio + nueva ruta-->
 
-<div class="modal fade" id="HRUTA" tabindex="-1" role="dialog" aria-labelledby="nuevoservicio" aria-hidden="true">
+<div class="modal fade" id="HRUTA" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
   <div class="modal-dialog" role="document">
 
@@ -1645,7 +1717,7 @@ WHERE tipo='t'
 
       <div class="modal-header">
 
-        <h5 class="modal-title" id="nuevoservicio">Actualizar Servicio</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar Servicio</h5>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
@@ -2103,7 +2175,7 @@ WHERE tipo='t'
 
       <td >
 
-          <input class="ancho" type="text" id="NOBS_PROG" name="OBS_PROG" value="<?php echo $filaso ['OBSERVACION_SERV']  ?>" placeholder="Observacion">
+          <input class="ancho" type="text" id="OBS_PROG" name="OBS_PROG" value="<?php echo $filaso ['OBSERVACION_SERV']  ?>" placeholder="Observacion">
 
       </td>
 
@@ -2139,9 +2211,9 @@ WHERE tipo='t'
 
             <div class="col">
 
-                <label for="NRESGUARDO">RESGUARDO</label>
+                <label for="RESGUARDO">RESGUARDO</label>
 
-                <select class="custom-select" id="NRESGUARDO" name="RESGUARDO" >
+                <select class="custom-select" id="RESGUARDO" name="RESGUARDO" >
 
                 <option selected value="<?php echo $filaso ['RESGUARDO']  ?>"> <?php echo $filaso ['RESGUARDO']  ?></option>
 
@@ -2170,12 +2242,12 @@ WHERE tipo='t'
 
         <div class="form-row">
             <div class="col">
-                <label for="N_BULTOS">BULTOS</label>
-                <input  type="number" class="form-control" id="N_BULTOS" name="NBULTOS" value="<?php echo $filaso ['NBULTOS']  ?>">
+                <label for="NBULTOS">BULTOS</label>
+                <input  type="number" class="form-control" id="NBULTOS" name="NBULTOS" value="<?php echo $filaso ['NBULTOS']  ?>">
             </div>
             <div class="col">
-                <label for="NPALETAS">PALETAS</label>
-                <input  type="number" class="form-control" id="NPALETAS" name="PALETAS" value="<?php echo $filaso ['PALETAS']  ?>">
+                <label for="PALETAS">PALETAS</label>
+                <input  type="number" class="form-control" id="PALETAS" name="PALETAS" value="<?php echo $filaso ['PALETAS']  ?>">
             </div>
             <div class="col">
                 <label for="DATALOGGER">DATALOGGER</label>
@@ -2211,5 +2283,7 @@ WHERE tipo='t'
 
 
 
-
-<?php include('includes/footer.php'); ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

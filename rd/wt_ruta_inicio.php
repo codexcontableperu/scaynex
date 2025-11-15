@@ -75,7 +75,7 @@ WHERE Id_SERG=$idp
      }
 
 
-     if ($filas2 ['FOTOS'] === "NO" ) {
+     if ($filas2 ['FOTO_INICIO'] === "NO" ) {
           ?> 
           <a href="#FOTOS" class="btn btn-light" data-toggle="modal"> 
             <span class="icon-image"></span>
@@ -86,7 +86,7 @@ WHERE Id_SERG=$idp
           ?> 
             <a href="#FOTOS" class="btn btn-primary" data-toggle="modal">
           <span class="icon-image"></span> <br>
-          <small><?php echo $filas2['FOTOS']?></small> 
+          <small><?php echo $filas2['FOTO_INICIO']?></small> 
           </a> 
           <?php
 
@@ -319,7 +319,50 @@ WHERE tipo='t'
 
                                     <div class="mb-3">
                                         <label for="doc_imagen_ing" class="form-label">Subir Comprobante (Imagen)</label>
-                                        <input type="file" class="form-control" id="doc_imagen_ing" name="doc_imagen" accept="image/*">
+
+<!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="doc_imagen_ing" 
+       name="doc_imagen" 
+       accept="image/*" required>
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-dark" onclick="openCamera()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGallery()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInput = document.getElementById('doc_imagen_ing');
+  const fileName = document.getElementById('file-name');
+  
+  function openCamera() {
+    fileInput.setAttribute('capture', 'environment');
+    fileInput.click();
+  }
+  
+  function openGallery() {
+    fileInput.removeAttribute('capture');
+    fileInput.click();
+  }
+  
+  // Mostrar nombre del archivo seleccionado
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileName.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
                                     </div>
 
                                     <button type="submit" class="btn btn-success w-100">
@@ -374,7 +417,49 @@ WHERE tipo='t'
 
                                     <div class="mb-3">
                                         <label for="doc_imagen_egr" class="form-label">Subir Comprobante (Imagen)</label>
-                                        <input type="file" class="form-control" id="doc_imagen_egr" name="doc_imagen" accept="image/*">
+   <!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="doc_imagen_egr" 
+       name="doc_imagen" 
+       accept="image/*" required>
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-dark" onclick="openCameraEgr()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGalleryEgr()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name-egr" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInputEgr = document.getElementById('doc_imagen_egr');
+  const fileNameEgr = document.getElementById('file-name-egr');
+  
+  function openCameraEgr() {
+    fileInputEgr.setAttribute('capture', 'environment');
+    fileInputEgr.click();
+  }
+  
+  function openGalleryEgr() {
+    fileInputEgr.removeAttribute('capture');
+    fileInputEgr.click();
+  }
+  
+  fileInputEgr.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileNameEgr.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
                                     </div>
 
                                     <button type="submit" class="btn btn-danger w-100">
@@ -719,7 +804,56 @@ $filasle=mysqli_fetch_assoc($resultle)
 
     <div class="form-group">
         <label for="head_imagen">Imagen: </label>
-        <input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
+
+   <!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="head_imagen" 
+       name="head_imagen" 
+       accept="image/*">
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3 justify-content-center">
+  <button type="button" class="btn btn-dark" onclick="openCameraEgr()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-outline-dark" onclick="openGalleryEgr()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name-head" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInputhead = document.getElementById('head_imagen');
+  const fileNamehead = document.getElementById('file-name-head');
+  
+  function openCameraEgr() {
+    fileInputhead.setAttribute('capture', 'environment');
+    fileInputhead.click();
+  }
+  
+  function openGalleryEgr() {
+    fileInputhead.removeAttribute('capture');
+    fileInputhead.click();
+  }
+  
+  fileInputhead.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileNamehead.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
         <label for="head_imagen">Descripción : </label>
         <input class="form-control" type="txt" id="ALCANCE" name="ALCANCE" required>
     </div>

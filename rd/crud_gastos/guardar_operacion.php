@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tipo_dh'])) {
     $importe = $_POST['importe'];
     $observacion = mysqli_real_escape_string($conexion, $_POST['observacion']);
     $id_user = $_POST['id_user']; // Aquí deberías capturar el ID del usuario logueado
-    $dni_user = $_POST['dni_user']; // Aquí deberías capturar el DNI del usuario logueado
+   
     $id_programacion = $_POST['id_programacion']; // Debes capturar el ID de programación activa
     
     // Calculamos el saldo (positivo o negativo)
@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tipo_dh'])) {
         $directorio = 'fotos_gastos/'; // Carpeta física desde donde está este archivo
         $nombre_archivo = uniqid() . '_' . basename($_FILES['doc_imagen']['name']);
         // Ruta física real en el servidor
-        $ruta_fisica = __DIR__ . '/' . $directorio . $nombre_archivo;
+        $ruta_fisica = '../../img/' . $directorio . $nombre_archivo;
         // Ruta web que se guardará en la base de datos
-        $ruta_destino = 'crud_gastos/' . $directorio . $nombre_archivo;
+        $ruta_destino = $directorio . $nombre_archivo;
         // Mover la imagen al directorio físico
         if (!move_uploaded_file($_FILES['doc_imagen']['tmp_name'], $ruta_fisica)) {
             echo "Error al subir la imagen.";
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tipo_dh'])) {
         } else {
             // Caso contrario
             echo '<script type="text/javascript">
-                window.location.href="./../wt_prog_user.php?dni=' . $dni_user . '";
+                window.location.href="./../wt_prog_user.php";
             </script>';
             exit;
         }
@@ -61,5 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tipo_dh'])) {
 } else {
     echo "Datos no válidos o acceso indebido.";
 }
+
 mysqli_close($conexion);
 ?>

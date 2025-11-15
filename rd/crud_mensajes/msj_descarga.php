@@ -8,10 +8,27 @@ if (isset($_GET['idd'])) {
 FROM guias_remitente INNER JOIN rd_descargas ON guias_remitente.id_desg = rd_descargas.id_descaga
 GROUP BY rd_descargas.pe_cliente, rd_descargas.desg_distrito, rd_descargas.h_entrega, rd_descargas.h_salida, rd_descargas.id_descaga
 HAVING (((rd_descargas.id_descaga)=$idd));";
+  
   $result = mysqli_query($conexion, $query);
-$filas=mysqli_fetch_assoc($result);
+  
+  // 1) Validar si hay registros
+  if (mysqli_num_rows($result) == 0) {
+    echo "<script>alert('INGRESE DATOS DE GUIA DE REMISION'); window.history.back();</script>";
+    exit();
+  }
+  
+  $filas = mysqli_fetch_assoc($result);
 
-
+  // 2) Validar t_espera = '0h 00m' o NULL o vacío
+  if (
+      !isset($filas['t_espera']) || 
+      is_null($filas['t_espera']) || 
+      $filas['t_espera'] === '' || 
+      $filas['t_espera'] === '0h 00m'
+  ) {
+    echo "<script>alert('REGISTRE LA HORA DE ENTREGA Y LA HORA DE SALIDA CORRECTA'); window.history.back();</script>";
+    exit();
+  }
 
 /*--- NEW MENSAJE ---*/
 $reporte = "
@@ -32,21 +49,12 @@ $titulo = "
 
 ";
 
+$mensaje = $titulo . $reporte;
 
-
-$mensaje = $titulo . $reporte ;
-
-//echo $mensaje;
-//die();
-    /*---redireccion ---*/
- ?>   
+?>   
 <meta http-equiv="refresh" 
       content="0;url=https://wa.me/?text=<?php echo $mensaje ?>" />
 <?php 
-
-
-
-
 
 }
 ?>

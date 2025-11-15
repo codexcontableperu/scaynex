@@ -535,7 +535,8 @@ $filasD=mysqli_fetch_assoc($resultD);
           ?> 
           <a href="#rdescarga" class="btn btn-primary" data-toggle="modal">
             <span class="icon-download2"></span>
-            <br><span style="font-size: 8px;">REGISTRO</span>
+            <br><span style="font-size: 8px;">ACTUALIZAR</span>
+            <br><span style="font-size: 8px;">DESCARGA</span>
             </a>
           <?php
 
@@ -546,6 +547,7 @@ $filasD=mysqli_fetch_assoc($resultD);
           ?> 
         <a type="button" class="btn btn-light" href="#GUIAR" data-toggle="modal">
             <i class="icon-clipboard"></i>
+            <br><span style="font-size: 8px;">REGISTRO</span>
             <br><span style="font-size: 8px;">GUIAS REM</span>
         </a>
 
@@ -554,6 +556,7 @@ $filasD=mysqli_fetch_assoc($resultD);
           ?> 
           <a type="button" class="btn btn-primary" href="#GUIAR" data-toggle="modal">
             <i class="icon-clipboard"></i>
+            <br><span style="font-size: 8px;">REGISTRO</span>
             <br><span style="font-size: 8px;">GUIAS REM</span>
             </a>
 
@@ -588,22 +591,20 @@ if ($numfilasGTR != 0) {
 
      if ($filas2 ['GUIA_TRANSP'] === "NO" ) {
           ?> 
-          <a href="#nGUIATRANSP" class="btn btn-sm btn-warning" data-toggle="modal"> 
-            <span class="icon-compass"></span> <br>
+
+ <!-- Botón para abrir el offcanvas -->     
+          <a class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#modalGuias"> 
+            <i class="fa-solid fa-file"></i> <br>
             <span>Solicitar</span><br>
             <span>G. Transporte</span>
-          </a> 
-          <?php
-     } else {
-          ?> 
-            <a href="#aGUIATRANSP" class="btn btn-info" data-toggle="modal" style="color:white;">
-          <span class="icon-compass"></span> 
-          <br>
-          <span>Solicitado</span> 
-          </a> 
+          </a>
+
+ 
           <?php
 
-     } 
+     }
+
+
 } 
 
 
@@ -631,6 +632,144 @@ if ($numfilasGTR != 0) {
     </tr>
  </tbody>  
 </table>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalGuias" tabindex="-1" role="dialog" aria-labelledby="modalGuiasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalGuiasLabel">Solicitar Guías Remision Transportista</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-sm small" style="font-size: 0.65rem;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>CLIENTE</th>
+                                <th>GUÍA REM</th>
+                                <th>FACTURA</th>
+                                <th>ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // Consulta para obtener los datos relacionados
+                            $sql = "SELECT 
+                                        rd.pe_cliente AS cliente,
+                                        rd.desg_distrito AS distrito,
+                                        gr.gr_serienum AS guia_remitente,
+                                        gr.fact_cliente AS factura,
+                                        gr.GUIA_TRANS AS GUIA_T,
+                                        gr.id_guiar
+                                    FROM guias_remitente gr
+                                    INNER JOIN rd_descargas rd ON gr.id_desg = rd.id_descaga
+                                    WHERE gr.id_desg = ?
+                                    ORDER BY rd.pe_cliente";
+                            
+                            $stmt = $conexion->prepare($sql);
+                            $stmt->bind_param("i", $idd);
+                            $stmt->execute();
+                            $resultado = $stmt->get_result();
+                            
+                            if ($resultado->num_rows > 0) {
+                                while ($fila = $resultado->fetch_assoc()) {
+                                    // Determinar el color del botón según el estado
+                                    $estado = strtolower(trim($fila['GUIA_T']));
+                                    $colorBoton = 'btn-secondary'; // Color por defecto
+                                    
+                                    if ($estado == 'pendiente') {
+                                        $colorBoton = 'btn-success';
+                                    } elseif ($estado == 'solicitado') {
+                                        $colorBoton = 'btn-warning';
+                                    } elseif ($estado == 'emitido') {
+                                        $colorBoton = 'btn-primary';
+                                    }
+                                    
+                                    echo "<tr>";
+                                    echo "<td>" . htmlspecialchars($fila['cliente']) . "<br><small class='text-muted'>" . htmlspecialchars($fila['distrito']) . "</small></td>";
+                                    echo "<td>" . htmlspecialchars($fila['guia_remitente']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($fila['factura']) . "</td>";
+                                    echo "<td>
+                                            <button class='btn btn-sm " . $colorBoton . " btn-solicitar' 
+                                                    data-id='" . $fila['id_guiar'] . "'
+                                                    data-estado='" . htmlspecialchars($fila['GUIA_T']) . "'>
+                                                " . htmlspecialchars(ucfirst($fila['GUIA_T'])) . "
+                                            </button>
+                                          </td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4' class='text-center'>No hay guías para esta ruta</td></tr>";
+                            }
+                            
+                            $stmt->close();
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para manejar el botón Solicitar -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn-solicitar')) {
+            const btn = e.target;
+            const idGuia = btn.getAttribute('data-id');
+            const estadoActual = btn.getAttribute('data-estado').toLowerCase().trim();
+
+            // Si no está pendiente, solo ignoramos el click (sin alert)
+            if (estadoActual !== 'pendiente') {
+                return;
+            }
+
+            // Sin confirm, se solicita directo
+            fetch('crud_guiarem/procesar_solicitud.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id_guiar=' + encodeURIComponent(idGuia) + '&accion=solicitar'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.textContent = 'Solicitado';
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-warning');
+                    btn.setAttribute('data-estado', 'solicitado');
+                    // Sin alert, solo cambio visual
+                } else {
+                    alert('Error al procesar la solicitud: ' + (data.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error en la conexión');
+            });
+        }
+    });
+});
+</script>
+
+
+
+
+
+
 
 
 <table class="table table-sm table-dark">
@@ -666,7 +805,7 @@ if ($numfilasGTR != 0) {
           <?php
      } else {
           ?> 
-          <a href="#K_llegadadestino" class="btn btn-warning btn-sm" data-toggle="modal">
+          <a href="#k_llegadadestino" class="btn btn-warning btn-sm" data-toggle="modal">
               <span class="icon-road"></span>
               <br><small><?php echo $filasD['K_llegadadestino']?></small>
               <br><span style="font-size: 8px;">KMH</span>
@@ -755,6 +894,11 @@ if ($filasD ['h_entrega'] != null and $filasD ['h_llegadadestino'] != null) {
           <?php
 
      }
+
+
+
+
+
 
      ?>
 
@@ -986,7 +1130,51 @@ $resultG=mysqli_query($conexion, $queryG);
 <input class="form-control"  type="hidden" id="idd" name="idd" value="<?php echo $idd ; ?> " readonly>   
 <div class="form-group">
         <label for="head_imagen">Imagen: </label>
-        <input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
+
+<!-- Input oculto -->
+<input type="file" 
+       class="form-control d-none" 
+       id="head_imagen" 
+       name="head_imagen" 
+       accept="image/*">
+
+<!-- Botones con Bootstrap -->
+<div class="d-flex gap-2 border rounded p-3">
+  <button type="button" class="btn btn-success" onclick="openCameraIng()">
+    <i class="bi bi-camera-fill"></i> Cámara
+  </button>
+  
+  <button type="button" class="btn btn-primary" onclick="openGalleryIng()">
+    <i class="bi bi-folder2-open"></i> Galería
+  </button>
+</div>
+
+<!-- Opcional: Mostrar nombre del archivo seleccionado -->
+<small id="file-name-ing" class="text-muted mt-2 d-block"></small>
+
+<script>
+  const fileInputIng = document.getElementById('head_imagen');
+  const fileNameIng = document.getElementById('file-name-ing');
+  
+  function openCameraIng() {
+    fileInputIng.setAttribute('capture', 'environment');
+    fileInputIng.click();
+  }
+  
+  function openGalleryIng() {
+    fileInputIng.removeAttribute('capture');
+    fileInputIng.click();
+  }
+  
+  fileInputIng.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      fileNameIng.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+</script>
+
+
+
         <label for="head_imagen">Descripción : </label>
         <input class="form-control" type="txt" id="ALCANCE" name="ALCANCE" required>
     </div>
@@ -1102,6 +1290,54 @@ WHERE tipo='e'
 
    <?php } ?>
 
+<?php
+
+     $query7="
+SELECT *
+FROM update2
+WHERE tipo='t'
+                ";
+     $result7=mysqli_query($conexion, $query7);
+
+
+
+?>
+
+  <?php while($filas7=mysqli_fetch_assoc($result7)) { ?>
+
+<div class="modal" tabindex="-1" role="dialog" id="<?php echo $filas7 ['campo']?>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><?php echo $filas7 ['titulo']?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  
+<form  action="crud_descargas/update2.php" method="GET" enctype="multipart/form-data" class="colm">
+
+<input class="form-control"  type="hidden" id="idp" name="idp" value="<?php echo $idp ; ?> " readonly>
+<input class="form-control"  type="hidden" id="idd" name="idd" value="<?php echo $idd ; ?> " readonly>
+<input class="form-control"  type="hidden" id="idr" name="idr" value="<?php echo $idr ; ?> " readonly>
+<input class="form-control"  type="hidden" id="i" name="i" value="<?php echo $filas7 ['indicador']?>" readonly>
+
+  <div class="form-group" >
+    <label for="head_fecha">Ingrese: </label>
+    <input class="form-control" type="text"  id="txt" name="txt" required>
+  </div>
+      </div>
+      <div class="modal-footer">
+      <button type="submit" class="btn btn-primary btn-lg btn-block" id="guardar" name="guardar">REGISTRAR</button>
+</form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+   <?php } ?>
 
 
 
@@ -1136,7 +1372,6 @@ $resultS=mysqli_query($conexion, $queryS);
 <?php } ?>
 
 <div class="dropdown-divider"></div>
-
 <form  action="crud_gtransp/create.php" method="POST" enctype="multipart/form-data" class="colm">
 <input class="form-control"  type="hidden" id="idp" name="idp" value="<?php echo $idp ; ?> " readonly>
 <input class="form-control"  type="hidden" id="idr" name="idr" value="<?php echo $idr ; ?> " readonly>
@@ -1164,5 +1399,17 @@ $resultS=mysqli_query($conexion, $queryS);
 
 
 
-<?php include('includes/footer.php'); ?>
+<!-- jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Popper ANTES de Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap al final -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
 
