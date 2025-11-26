@@ -15,7 +15,7 @@
     $id_registro = (int)$_GET['id_vh'];
 
     // Obtener información del registro
-    $sql_registro = "SELECT * FROM rd_segimientos_head WHERE Id_SERG = $id_registro";
+    $sql_registro = "SELECT * FROM rd_segimientos_head WHERE PLACA = $id_registro";
     $resultado_registro = $conexion->query($sql_registro);
 
     if ($resultado_registro->num_rows == 0) {
@@ -147,13 +147,13 @@
             EMPRESA = '$empresa',
             CUENTA = '$cuenta',
             CLIENTE_FINAL = '$cliente_final',
-            H_CITA = '$h_cita',
             H_CITA_R = '$h_cita_r',
+            H_CITA_R = '$h_cita_base',
             TEMPERATURA = '$temperatura',
             CAPACIDAD_VEHICULO = '$capacidad_vehiculo',
             NUM_PALETAS = '$num_paletas',
             BULTOS_ROLLER = '$bultos_roller',
-            OBS_PROG = '$observaciones',
+            OBSERVACIONES_PROG = '$observaciones',
             ID_CONDUC = " . (!empty($conductor_id) ? $conductor_id : "NULL") . ",
             ID_AUX1 = " . (!empty($auxiliar1_id) ? $auxiliar1_id : "NULL") . ",
             ID_AUX2 = " . (!empty($auxiliar2_id) ? $auxiliar2_id : "NULL") . ",
@@ -257,11 +257,11 @@
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Hora Base <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control form-control-sm" name="h_cita_r" value="<?php echo substr($registro['H_CITA_R'], 0, 5); ?>" required>
+                            <input type="time" class="form-control form-control-sm" name="h_cita_base" value="<?php echo substr($registro['H_CITA_BASE']?? '', 0, 5); ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Hora Cita <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control form-control-sm" name="h_cita" value="<?php echo substr($registro['H_CITA'], 0, 5); ?>" required>
+                            <input type="time" class="form-control form-control-sm" name="h_cita_r" value="<?php echo substr($registro['H_CITA_R']?? '', 0, 5); ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Empresa <span class="text-danger">*</span></label>

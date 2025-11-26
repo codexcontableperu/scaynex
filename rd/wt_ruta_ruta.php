@@ -1289,50 +1289,7 @@ WHERE tipo='t'
  <input class="form-control"  type="hidden" id="idd" name="idd" value="" readonly> 
 <div class="form-group">
         <label for="head_imagen">Imagen: </label>
-        
-<!-- Input oculto -->
-<input type="file" 
-       class="form-control d-none" 
-       id="head_imagen" 
-       name="head_imagen" 
-       accept="image/*">
-
-<!-- Botones con Bootstrap -->
-<div class="d-flex gap-2 border rounded p-3">
-  <button type="button" class="btn btn-success" onclick="openCameraIng()">
-    <i class="bi bi-camera-fill"></i> Cámara
-  </button>
-  
-  <button type="button" class="btn btn-primary" onclick="openGalleryIng()">
-    <i class="bi bi-folder2-open"></i> Galería
-  </button>
-</div>
-
-<!-- Opcional: Mostrar nombre del archivo seleccionado -->
-<small id="file-name-ing" class="text-muted mt-2 d-block"></small>
-
-<script>
-  const fileInputIng = document.getElementById('head_imagen');
-  const fileNameIng = document.getElementById('file-name-ing');
-  
-  function openCameraIng() {
-    fileInputIng.setAttribute('capture', 'environment');
-    fileInputIng.click();
-  }
-  
-  function openGalleryIng() {
-    fileInputIng.removeAttribute('capture');
-    fileInputIng.click();
-  }
-  
-  fileInputIng.addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      fileNameIng.textContent = '📎 ' + this.files[0].name;
-    }
-  });
-</script>
-
-
+<input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
 
         <label for="head_imagen">Descripción : </label>
         <input class="form-control" type="txt" id="ALCANCE" name="ALCANCE" value="Llegada Almacen" required>
@@ -1373,49 +1330,7 @@ WHERE tipo='t'
         <label for="head_imagen">Imagen: </label>
 
 
-<!-- Input oculto -->
-<input type="file" 
-       class="form-control d-none" 
-       id="head_imagen2" 
-       name="head_imagen" 
-       accept="image/*" required>
-
-<!-- Botones con Bootstrap -->
-<div class="d-flex gap-2 border rounded p-3">
-  <button type="button" class="btn btn-success" onclick="openCameraIng()">
-    <i class="bi bi-camera-fill"></i> Cámara
-  </button>
-  
-  <button type="button" class="btn btn-primary" onclick="openGalleryIng()">
-    <i class="bi bi-folder2-open"></i> Galería
-  </button>
-</div>
-
-<!-- Opcional: Mostrar nombre del archivo seleccionado -->
-<small id="file-name-2" class="text-muted mt-2 d-block"></small>
-
-<script>
-  const fileInput2 = document.getElementById('head_imagen2');
-  const fileName2 = document.getElementById('file-name-2');
-  
-  function openCameraIng() {
-    fileInput2.setAttribute('capture', 'environment');
-    fileInput2.click();
-  }
-  
-  function openGalleryIng() {
-    fileInput2.removeAttribute('capture');
-    fileInput2.click();
-  }
-  
-  fileInput2.addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      fileName2.textContent = '📎 ' + this.files[0].name;
-    }
-  });
-</script>
-
-
+ <input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
 
 
         <label for="head_imagen">Descripción : </label>
@@ -1455,49 +1370,7 @@ WHERE tipo='t'
  <input class="form-control"  type="hidden" id="idd" name="idd" value="" readonly> 
 <div class="form-group">
         <label for="head_imagen">Imagen: </label>
-
-<!-- Input oculto -->
-<input type="file" 
-       class="form-control d-none" 
-       id="head_imagen3" 
-       name="head_imagen" 
-       accept="image/*" required>
-
-<!-- Botones con Bootstrap -->
-<div class="d-flex gap-2 border rounded p-3">
-  <button type="button" class="btn btn-success" onclick="openCameraIng()">
-    <i class="bi bi-camera-fill"></i> Cámara
-  </button>
-  
-  <button type="button" class="btn btn-primary" onclick="openGalleryIng()">
-    <i class="bi bi-folder2-open"></i> Galería
-  </button>
-</div>
-
-<!-- Opcional: Mostrar nombre del archivo seleccionado -->
-<small id="file-name-3" class="text-muted mt-2 d-block"></small>
-
-<script>
-  const fileInput3 = document.getElementById('head_imagen3');
-  const fileName3 = document.getElementById('file-name-3');
-  
-  function openCameraIng() {
-    fileInput3.setAttribute('capture', 'environment');
-    fileInput3.click();
-  }
-  
-  function openGalleryIng() {
-    fileInput3.removeAttribute('capture');
-    fileInput3.click();
-  }
-  
-  fileInput3.addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      fileName3.textContent = '📎 ' + this.files[0].name;
-    }
-  });
-</script>
-
+ <input class="form-control" type="file" id="head_imagen" name="head_imagen" accept="image/*" required>
 
         <label for="head_imagen">Descripción : </label>
         <input class="form-control" type="txt" id="ALCANCE" name="ALCANCE" value="Salida de Almacen" required>

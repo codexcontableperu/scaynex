@@ -329,7 +329,7 @@
     // Columna de Acciones
     echo "<td>
     <div class='btn-group btn-group-sm'>
-    <a href='actualiza_programacion.php?id_vh=" . $fila['Id_SERG'] . "' class='btn btn-primary btn-sm' title='Ver/Editar'>
+    <a href='actualiza_programacion.php?idp=" . $fila['Id_SERG'] . "' class='btn btn-primary btn-sm' title='Ver/Editar'>
     <i class='fas fa-eye'></i>
     </a>
     <button type='button' class='btn btn-danger btn-sm' onclick='confirmarEliminacion(" . $fila['Id_SERG'] . ")' title='Eliminar'>

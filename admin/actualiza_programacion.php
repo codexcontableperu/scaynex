@@ -2,17 +2,17 @@
 </head>
 <body>
     <!-- Header Bar -->
-    <?php include("includes/menubar.php"); ?>
+  <?php //include("includes/menubar.php"); ?>
     <?php include("../data/conexion.php"); ?>
 
     <?php
-    // Verificar si se recibió el id_vh
-    if (!isset($_GET['id_vh']) || empty($_GET['id_vh'])) {
+    // Verificar si se recibió el idp
+    if (!isset($_GET['idp']) || empty($_GET['idp'])) {
         echo "<script>alert('ID de registro no válido'); window.location.href='programacion.php';</script>";
         exit();
     }
 
-    $id_registro = (int)$_GET['id_vh'];
+    $id_registro = (int)$_GET['idp'];
 
     // Obtener información del registro
     $sql_registro = "SELECT * FROM rd_segimientos_head WHERE Id_SERG = $id_registro";
@@ -24,6 +24,8 @@
     }
 
     $registro = $resultado_registro->fetch_assoc();
+
+
 
     // Obtener información del vehículo
     $sql_vehiculo = "SELECT * FROM unidades WHERE vh_placa = '" . $registro['PLACA'] . "' AND vh_activo = 'si'";
@@ -42,13 +44,16 @@
         $usuarios[] = $usuario;
     }
 
+
+
     // Procesar el formulario de actualización
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['actualizar_registro'])) {
         
         // Recoger y limpiar datos del formulario
         $s_fecha = limpiarDato($_POST['s_fecha']);
+        $placa = limpiarDato($_POST['placa']);
         $h_cita_r = limpiarDato($_POST['h_cita_r']);
-        $h_cita = limpiarDato($_POST['h_cita']);
+        $h_cita_base = limpiarDato($_POST['h_cita_base']);
         $supervisor_id = limpiarDato($_POST['supervisor']);
         $conductor_id = limpiarDato($_POST['conductor']);
         $auxiliar1_id = limpiarDato($_POST['auxiliar1']);
@@ -63,7 +68,8 @@
         $num_paletas = limpiarDato($_POST['num_paletas']);
         $bultos_roller = limpiarDato($_POST['bultos_roller']);
         $observaciones = limpiarDato($_POST['observaciones']);
-        
+
+
         // Obtener nombres de usuarios basados en los IDs seleccionados
         $conductor_nombre = '';
         $auxiliar1_nombre = '';
@@ -118,8 +124,9 @@
         
         // Escapar datos
         $s_fecha = $conexion->real_escape_string($s_fecha);
+        $PLACA = $conexion->real_escape_string($placa);
         $h_cita_r = $conexion->real_escape_string($h_cita_r);
-        $h_cita = $conexion->real_escape_string($h_cita);
+        $h_cita_base = $conexion->real_escape_string($h_cita_base);
         $supervisor_nombre = $conexion->real_escape_string($supervisor_nombre);
         $conductor_nombre = $conexion->real_escape_string($conductor_nombre);
         $auxiliar1_nombre = $conexion->real_escape_string($auxiliar1_nombre);
@@ -138,6 +145,7 @@
         // Actualizar registro con IDs y nombres
         $sql_update = "UPDATE rd_segimientos_head SET
             S_FECHA = '$s_fecha',
+            PLACA = '$placa',
             CONDUCTOR = '$conductor_nombre',
             AUXILIAR1 = '$auxiliar1_nombre',
             AUXILIAR2 = '$auxiliar2_nombre',
@@ -147,13 +155,13 @@
             EMPRESA = '$empresa',
             CUENTA = '$cuenta',
             CLIENTE_FINAL = '$cliente_final',
-            H_CITA = '$h_cita',
+            H_CITA_BASE = '$h_cita_base',
             H_CITA_R = '$h_cita_r',
             TEMPERATURA = '$temperatura',
             CAPACIDAD_VEHICULO = '$capacidad_vehiculo',
             NUM_PALETAS = '$num_paletas',
             BULTOS_ROLLER = '$bultos_roller',
-            OBS_PROG = '$observaciones',
+            OBSERVACIONES_PROG = '$observaciones',
             ID_CONDUC = " . (!empty($conductor_id) ? $conductor_id : "NULL") . ",
             ID_AUX1 = " . (!empty($auxiliar1_id) ? $auxiliar1_id : "NULL") . ",
             ID_AUX2 = " . (!empty($auxiliar2_id) ? $auxiliar2_id : "NULL") . ",
@@ -249,7 +257,7 @@
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Placa</label>
-                            <input type="text" class="form-control form-control-sm" value="<?php echo htmlspecialchars($registro['PLACA']); ?>" readonly>
+                            <input type="text" class="form-control form-control-sm" name="placa"  value="<?php echo htmlspecialchars($registro['PLACA']); ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Fecha Servicio <span class="text-danger">*</span></label>
@@ -257,11 +265,11 @@
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Hora Base <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control form-control-sm" name="h_cita_r" value="<?php echo substr($registro['H_CITA_R'], 0, 5); ?>" required>
+                            <input type="time" class="form-control form-control-sm" name="h_cita_base" value="<?php echo substr($registro['H_CITA_BASE']?? '', 0, 5); ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Hora Cita <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control form-control-sm" name="h_cita" value="<?php echo substr($registro['H_CITA'], 0, 5); ?>" required>
+                            <input type="time" class="form-control form-control-sm" name="h_cita_r" value="<?php echo substr($registro['H_CITA_R'] ?? '', 0, 5); ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small">Empresa <span class="text-danger">*</span></label>
@@ -290,7 +298,7 @@
                                     $selected = ($registro['ID_CONDUC'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -303,7 +311,7 @@
                                     $selected = ($registro['ID_AUX1'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -316,7 +324,7 @@
                                     $selected = ($registro['ID_AUX2'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -329,7 +337,7 @@
                                     $selected = ($registro['ID_AUX3'] == $usuario['id_user']) ? 'selected' : '';
                                 ?>
                                 <option value="<?php echo $usuario['id_user']; ?>" <?php echo $selected; ?>>
-                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -340,7 +348,7 @@
                                 <option value="">Seleccionar supervisor</option>
                                 <?php foreach($usuarios as $usuario): ?>
                                 <option value="<?php echo $usuario['id_user']; ?>">
-                                    <?php echo htmlspecialchars($usuario['user_nick'] . ' - ' . $usuario['user_nombre']); ?>
+                                    <?php echo htmlspecialchars($usuario['user_nombre']); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -391,7 +399,7 @@
                             <h6 class="border-bottom pb-1 mb-2 text-primary">Observaciones</h6>
                             <div class="mb-2">
                                 <label class="form-label small">Observaciones Generales</label>
-                                <textarea class="form-control form-control-sm" name="observaciones" rows="2"><?php echo htmlspecialchars($registro['OBS_PROG'] ?? ''); ?></textarea>
+                                <textarea class="form-control form-control-sm" name="observaciones" rows="2"><?php echo htmlspecialchars($registro['OBSERVACIONES_PROG'] ?? ''); ?></textarea>
                             </div>
                         </div>
                     </div>
